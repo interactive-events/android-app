@@ -34,6 +34,12 @@
             android:name=".EventListActivity" >
 
         </activity>
+        <activity
+            android:name="com.wordpress.interactiveevents.interactive_events.EventActivity"
+            android:label="Event Answer"
+            android:parentActivityName="com.wordpress.interactiveevents.interactive_events.LoginActivity" >
+
+        </activity>
 
     </application>
 

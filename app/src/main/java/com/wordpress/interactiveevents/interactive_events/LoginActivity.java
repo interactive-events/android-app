@@ -143,7 +143,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             public void onClick(DialogInterface dialog,int id) {
                 // cancel the alert box and put a Toast to the user
                 Intent positveActivity = new Intent(getApplicationContext(),
-                        PositiveActivity.class);
+                        EventActivity.class);
                 startActivity(positveActivity);
             }
         });
