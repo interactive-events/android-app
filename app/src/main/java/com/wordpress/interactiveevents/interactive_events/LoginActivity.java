@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,6 +30,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/* testar knapp*/
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
+
+
 
 /**
  * A login screen that offers login via email/password.
@@ -35,6 +50,8 @@ import java.util.List;
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
+
+    private Button mainBtn;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -53,10 +70,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private View mProgressView;
     private View mLoginFormView;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -84,7 +107,54 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //KNAPPTEST
+        mainBtn = (Button) findViewById(R.id.button);
+        mainBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                openAlert(v);
+            }
+        });
+        //KNAPPTEST
     }
+
+    //KNAPPTEST
+    private void openAlert(View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+        alertDialogBuilder.setTitle(this.getTitle()+ " decision");
+        alertDialogBuilder.setMessage("Nearby event attended! \n Name : [Hårdkodad]");
+        // set positive button: Yes message
+        alertDialogBuilder.setNeutralButton("Got it!",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                // go to a new activity of the app
+                dialog.cancel();
+                Toast.makeText(getApplicationContext(), "You are now attending: [Hårdkodad]",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+        // set negative button: No message
+        alertDialogBuilder.setPositiveButton("Take me to event!",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                // cancel the alert box and put a Toast to the user
+                Intent positveActivity = new Intent(getApplicationContext(),
+                        PositiveActivity.class);
+                startActivity(positveActivity);
+            }
+        });
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show alert
+        alertDialog.show();
+    }
+    //KNAPPTEST SLUT
+
+
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
@@ -181,6 +251,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+
+            mainBtn.setVisibility(show ? View.VISIBLE : View.GONE);
+            mainBtn.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mainBtn.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
