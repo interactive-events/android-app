@@ -6,14 +6,13 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -27,6 +26,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 
 
+
 /**
  * A login screen that offers login via email/password.
 
@@ -57,7 +58,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world", "a@a.a:a"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -201,6 +202,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             cancel = true;
         }
 
+        //cancel = true; // TODO: change this..
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -367,7 +369,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
 
             if (success) {
-                finish();
+                //Starting a new Intent
+                Intent nextScreen = new Intent(getApplicationContext(), EventListActivity.class);
+
+                //Sending data to another Activity
+                //nextScreen.putExtra("name", inputName.getText().toString());
+                //nextScreen.putExtra("email", inputEmail.getText().toString());
+
+                //Log.e("n", inputName.getText() + "." + inputEmail.getText());
+
+                startActivity(nextScreen);
+                //finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
