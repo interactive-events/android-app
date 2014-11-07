@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
-    // a comment
+    // a comment 2
 
     private Button mainBtn;
     /**
