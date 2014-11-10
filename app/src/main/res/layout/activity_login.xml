@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text"
                     android:layout_marginTop="20dp"
-                    android:text="Show Alert Box" />
+                    android:text="Show Alert Box DERP" />
 
             </LinearLayout>
     </ScrollView>
