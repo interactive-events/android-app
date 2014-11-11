@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,8 +44,6 @@ import java.util.List;
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
     // a comment 2
-
-    private Button mainBtn;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -62,6 +61,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button mainBtn;
+    private Button urlBtn;
+    final Context context = this;
 
 
 
@@ -111,8 +113,22 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 openAlert(v);
             }
         });
-        //KNAPPTEST
+
+        //WEBVIEWTEST
+        urlBtn = (Button) findViewById(R.id.buttonUrl);
+
+        urlBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, WebViewActivity.class);
+                startActivity(intent);
+            }
+
+        });
+        //WEBVIEWTEST SLUT
     }
+
 
     //KNAPPTEST
     private void openAlert(View view) {
