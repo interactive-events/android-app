@@ -588,7 +588,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     final String event_title = event.getString("title");
                     final String beacon_id = event.getString("beaconId");
                     final String event_desc = event.getString("description");
-                    Log.i("API", event_title+", "+beacon_id);
+                    Log.i("API", event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
                     openBeaconAlert(event_title,beacon_id,event_desc);
