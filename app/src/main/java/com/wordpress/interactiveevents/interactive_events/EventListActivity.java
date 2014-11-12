@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -194,8 +195,8 @@ public class EventListActivity extends Activity {
                 for (int i=0; i < events.length(); i++)
                 {
                     JSONObject event = events.getJSONObject(i).getJSONObject("event");
-                    String title = event.getString("title");
-                    String description = event.getString("description");
+                    final String title = event.getString("title");
+                    final String description = event.getString("description");
                     Log.i("API", title+", "+description);
 
                     TableRow tr = new TableRow(context);
@@ -218,6 +219,22 @@ public class EventListActivity extends Activity {
                     Button eventButton = new Button(context);
                     eventButton.setText("View");
                     tr.addView(eventButton);
+
+                    //testar redir
+
+                    eventButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View arg0) {
+                            Intent eventScreen = new Intent(getApplicationContext(), EventActivity.class);
+                            eventScreen.putExtra("event_title", title);
+                            eventScreen.putExtra("event_desc", description);
+                            startActivity(eventScreen);
+                        }
+
+                    });
+
+                    //slut test
 
                     table.addView(tr, new TableLayout.LayoutParams(
                             TableRow.LayoutParams.FILL_PARENT,
