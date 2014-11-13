@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -42,12 +43,24 @@ public class BleActivity extends Application implements BootstrapNotifier{
     @Override
     public void didEnterRegion(Region arg0) {
         Log.d(TAG, "###################################### Did enter region ######################################");
-        Intent intent = new Intent(getApplicationContext(), PositiveActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
+
+        //##########EL SIMONÈ LOS VARIABLOS BELOW##########
+        /*
+        beaconService.putExtra("beacon_ID", title);
+        beaconService.putExtra("beacon_major", description);
+        beaconService.putExtra("beacon_minor", description);
+        */
+        
+        
         // Important:  make sure to add android:launchMode="singleInstance" in the manifest
         // to keep multiple copies of this activity from getting created if the user has
         // already manually launched the app.
-        startActivity(intent);
+
+        //old code no bueno activity-san
+        //startActivity(intent);
+
+        startService(beaconService);
     }
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
