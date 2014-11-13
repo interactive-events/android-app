@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ public class BeaconDataService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Log.i("#########ONSTARTCOMMAND#########", "did i almost do it ?");
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
@@ -54,12 +55,16 @@ public class BeaconDataService extends Service{
 
             //int[] beacon_data = extras.getIntArray("BeaconMinMaj");
             String beaconID = extras.getString("beacon_ID");
-            Integer beaconMajor = extras.getInt("beacon_major");
-            Integer beaconMinor = extras.getInt("beacon_minor");
+            String beaconMajor = extras.getString("beacon_major");
+            String beaconMinor = extras.getString("beacon_minor");
 
+            Log.i("#########MAJOR#########", beaconMajor);
+            Log.i("#########MINOR#########", beaconMinor);
+            Log.i("#########ID#########", beaconID);
 
             getBeaconEvent = new getBeaconEvent(beaconID, beaconMajor, beaconMinor);
             getBeaconEvent.execute((Void) null);
+            Log.i("#########ONSTARTCOMMAND#########", "did i do it ?");
         }
         return 0;
     }
@@ -67,6 +72,10 @@ public class BeaconDataService extends Service{
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onCreate (){
     }
 
 
@@ -93,6 +102,7 @@ public class BeaconDataService extends Service{
                 Intent positveActivity = new Intent(getApplicationContext(), EventActivity.class);
                 positveActivity.putExtra("event_title", eventName);
                 positveActivity.putExtra("event_desc", eventDesc);
+                positveActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(positveActivity);
 
             }
@@ -100,6 +110,7 @@ public class BeaconDataService extends Service{
 
 
         AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         // show alert
         alertDialog.show();
     }
@@ -111,10 +122,9 @@ public class BeaconDataService extends Service{
 
     //TESTAR [BEACON sens]
     public class getBeaconEvent extends AsyncTask<Void, Void, String> {
-        Integer beaconMajor,beaconMinor;
-        String beaconID;
+        String beaconID,beaconMajor,beaconMinor;
 
-        getBeaconEvent(String beaconID, Integer beaconMajor, Integer beaconMinor) {
+        getBeaconEvent(String beaconID, String beaconMajor, String beaconMinor) {
             this.beaconID = beaconID;
             this.beaconMajor = beaconMajor;
             this.beaconMinor = beaconMinor;

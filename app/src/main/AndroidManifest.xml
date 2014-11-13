@@ -39,6 +39,10 @@
             android:parentActivityName="com.wordpress.interactiveevents.interactive_events.LoginActivity" >
         </activity>
 
+        <service android:name=".BeaconDataService">
+
+        </service>
+
         <!--
         <activity android:name=".BleActivity">
         </activity>
@@ -59,5 +63,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 </manifest>
