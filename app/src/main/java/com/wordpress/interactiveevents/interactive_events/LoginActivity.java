@@ -225,7 +225,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         // set positive button: Yes message
         alertDialogBuilder.setNegativeButton("Ignore.",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int id) {
-                // go to a new activity of the app
+
                 dialog.cancel();
                 Toast.makeText(getApplicationContext(), "Ignored event: "+eventName,
                         Toast.LENGTH_LONG).show();
@@ -513,6 +513,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
                 Log.i("API", "server returned status code "+httpResponse.getStatusLine());
+
+                //random debugging
                 Log.i("BEACONREQUEST", "request to server: "+httpGet.getRequestLine());
                 Log.i("TESTARRANDOMSHIT", "beaconID="+beaconID);
                 Log.i("TESTARRANDOMSHIT2", "beaconsMinor="+beaconMinor);
@@ -586,54 +588,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     final String event_title = event.getString("title");
                     final String beacon_id = event.getString("beaconId");
                     final String event_desc = event.getString("description");
-                    Log.i("API", event_title+", "+beacon_id);
+                    Log.i("API", event_title+", "+beacon_id+", "+event_desc);
 
+                    //call popup method, populate with actual beacon data
                     openBeaconAlert(event_title,beacon_id,event_desc);
-
-
-
-                    /*
-                    TableRow tr = new TableRow(context);
-                    tr.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-
-                    // Create a TextView to add date
-                    TextView labelTitle = new TextView(context);
-                    labelTitle.setText(event_title);
-                    labelTitle.setPadding(2, 0, 5, 0);
-                    labelTitle.setTextColor(Color.BLACK);
-                    tr.addView(labelTitle);
-
-                    TextView labelDesc = new TextView(context);
-                    labelDesc.setText(uuid);
-                    labelDesc.setTextColor(Color.BLACK);
-                    tr.addView(labelDesc);
-
-
-                     Button eventButton = new Button(context);
-                    eventButton.setText("View");
-                    tr.addView(eventButton);
-
-                    //testar redir
-
-                    eventButton.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View arg0) {
-                            Intent eventScreen = new Intent(getApplicationContext(), EventActivity.class);
-                            eventScreen.putExtra("event_title", title);
-                            eventScreen.putExtra("event_desc", description);
-                            startActivity(eventScreen);
-                        }
-
-                    });
-
-                    //slut test
-                    table.addView(tr, new TableLayout.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-                    */
 
                 }
 

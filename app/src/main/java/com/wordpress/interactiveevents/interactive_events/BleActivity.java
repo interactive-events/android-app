@@ -55,23 +55,14 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
     @Override
     public void didEnterRegion(Region region) {
         Log.d(TAG, "###################################### Did enter region ######################################");
-        Intent intent = new Intent(getApplicationContext(), PositiveActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // Important:  make sure to add android:launchMode="singleInstance" in the manifest
         // to keep multiple copies of this activity from getting created if the user has
         // already manually launched the app.
-        //Intent intser = new Intent(getApplicationContext(), BeaconDataService.class);
         try {
             bm.startRangingBeaconsInRegion(region);
         } catch (RemoteException e){
             e.printStackTrace();
         }
-
-        startActivity(intent);
-
-        //intser.putExtra("test", BeaconMinMaj);
-        //startService(intser);
-
     }
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
@@ -79,11 +70,15 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
     @Override
     public void didExitRegion(Region region) {
     }
-
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+        Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
         for (Beacon beacon: beacons){
             Log.i(TAG, "Beacon detected with id1: "+beacon.getId1()+" id2:"+beacon.getId2()+" id3: "+beacon.getId3());
+            beaconService.putExtra("beacon_ID", beacon.getId1().toString());
+            beaconService.putExtra("beacon_major", beacon.getId2().toString());
+            beaconService.putExtra("beacon_minor", beacon.getId3().toString());
+            startService(beaconService);
         }
     }
 }
