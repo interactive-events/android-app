@@ -11,6 +11,11 @@
     tools:context=".LoginActivity">
 
     <!-- Login progress -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView" />
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -61,7 +66,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
-                android:background="@color/cs_green" />
+                android:background="@color/cs_green"
+                android:textColor="@color/cs_white" />
 
             <LinearLayout
                 android:orientation="vertical"
