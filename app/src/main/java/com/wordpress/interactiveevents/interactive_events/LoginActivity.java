@@ -163,15 +163,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             @Override
             public void onClick(View v) {
                 //beaconTable(beaconID, beaconMajor, beaconMinor);
-                Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
+                Intent eventList = new Intent(getApplicationContext(), EventListActivity.class);
 
-
+/*
                 beaconService.putExtra("beacon_ID", "1");
                 beaconService.putExtra("beacon_major", 1);
                 beaconService.putExtra("beacon_minor", 1);
 
-                Log.i("#########dafuq#########", "gg?");
-                startService(beaconService);
+                Log.i("#########dafuq#########", "gg?");*/
+                startActivity(eventList);
             }
         });
 
