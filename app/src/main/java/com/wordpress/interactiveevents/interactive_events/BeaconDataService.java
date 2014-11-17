@@ -78,7 +78,7 @@ public class BeaconDataService extends Service{
     public void onCreate (){
     }
 
-  
+
 
     //KNAPPTEST2
     private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
