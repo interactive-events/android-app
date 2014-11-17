@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -90,18 +91,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     String beaconID;
     Integer beaconMajor,beaconMinor;
 
-
-
-
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
-
+        iv = new ImageView(context);
+        iv = (ImageView)findViewById(R.id.imageView);
+        // scale image
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);

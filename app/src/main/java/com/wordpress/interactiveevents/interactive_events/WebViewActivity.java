@@ -31,8 +31,8 @@ public class WebViewActivity extends Activity {
 
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.aftonbladet.se");
-        //webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push");
+        //webView.loadUrl("http://www.aftonbladet.se");
+        webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push");
         //webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push", eventId, moduleId);
         //String url = String.format("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push", eventId, moduleId);
 

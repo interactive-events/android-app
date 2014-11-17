@@ -12,9 +12,12 @@
 
     <!-- Login progress -->
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView" />
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:id="@+id/imageView"
+        android:scaleType="centerInside"
+        android:src="@drawable/inactlogo"
+        android:layout_marginBottom="20dp" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -69,26 +72,22 @@
                 android:background="@color/cs_green"
                 android:textColor="@color/cs_white" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp">
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TESTKNAPPAR! #CAPSLOCK"
+                        android:text="Test buttons"
                         android:id="@+id/info"
                         android:layout_gravity="center_horizontal"
-                        android:textStyle="bold"
+                        android:textStyle=""
                         android:autoText="false"
-                        android:textSize="30dp" />
+                        android:textSize="20dp"
+                        android:layout_marginTop="20dp" />
 
                     <Button
                         android:id="@+id/button"
@@ -100,19 +99,17 @@
 
                     <Button
                         android:id="@+id/buttonUrl"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Go to surprise!" />
+                        android:text="Go to surprise" />
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="beacons!"
+                        android:text="Beacons"
                         android:id="@+id/beaconButton" />
 
                 </LinearLayout>
-
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
