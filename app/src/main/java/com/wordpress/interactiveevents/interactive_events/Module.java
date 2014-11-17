@@ -13,12 +13,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Module {
 
-    private String id;
+    private String moduleId;
     private String type;
     private List customData;
 
-    public void setId(String id) {
-        this.id = id;
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
     }
     public void setType(String type) {
         this.type = type;
@@ -27,8 +27,8 @@ public class Module {
         this.customData = customData;
     }
 
-    public String getId() {
-        return id;
+    public String getModuleId() {
+        return moduleId;
     }
     public String getType() {
         return type;
@@ -36,6 +36,6 @@ public class Module {
     public List getCustomData() {
         return customData;
     }
-    public String toString() { return id+" "+type; }
+    public String toString() { return moduleId+" "+type; }
 
 }

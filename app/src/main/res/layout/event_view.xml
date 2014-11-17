@@ -89,19 +89,31 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
+<!--
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event activity"
+            android:id="@+id/textView"
+            android:textIsSelectable="false"
+            android:paddingLeft="10dp" />
+            -->
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="146dp"
+            android:id="@+id/listView"
+            android:layout_weight="0.53" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Test Request"
-            android:id="@+id/button3" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/button3"
+            android:layout_gravity="right" />
 
     </LinearLayout>
 
