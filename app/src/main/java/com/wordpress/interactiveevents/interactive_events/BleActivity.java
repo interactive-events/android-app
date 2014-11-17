@@ -20,7 +20,10 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 import org.altbeacon.beacon.RangeNotifier;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Webbpiraten on 2014-11-10.
@@ -28,8 +31,10 @@ import java.util.Collection;
 public class BleActivity extends Application implements BootstrapNotifier, RangeNotifier{
     private static final String TAG = ".BleActivity";
     private RegionBootstrap regionBootstrap;
-    private String[] BeaconMinMaj;
     private BeaconManager bm;
+    ArrayList<String> stringList = new ArrayList<String>();
+    HashMap<String, Long> seenBeacons = new HashMap<String, Long>();
+    String listItem;
 
     public void onCreate() {
         super.onCreate();
@@ -73,12 +78,50 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
+        Log.d(TAG, "###################################### Periodic AIDS ######################################");
         for (Beacon beacon: beacons){
-            Log.i(TAG, "Beacon detected with id1: "+beacon.getId1()+" id2:"+beacon.getId2()+" id3: "+beacon.getId3());
-            beaconService.putExtra("beacon_ID", beacon.getId1().toString());
-            beaconService.putExtra("beacon_major", beacon.getId2().toString());
-            beaconService.putExtra("beacon_minor", beacon.getId3().toString());
-            startService(beaconService);
+
+            String beaconID = beacon.getId1().toString();
+            String beaconMajor = beacon.getId2().toString();
+            String beaconMinor = beacon.getId3().toString();
+
+
+            listItem = beaconID+beaconMajor+beaconMinor;
+            long unixTime = System.currentTimeMillis() / 1000L;
+
+
+            if(seenBeacons.get(listItem) != null) {
+                for (Map.Entry entry : seenBeacons.entrySet()) {
+                    Log.i(TAG,"####URINGAS####"+entry.getKey() + ", " + entry.getValue());
+                }
+                Log.i(TAG, "prev. beacon found");
+                Long timeDiff = unixTime - seenBeacons.get(listItem);
+                Log.i(TAG,""+timeDiff);
+                if (timeDiff < 30L) {
+                    Log.i(TAG, "beacon found updating timer");
+                    seenBeacons.put(listItem, unixTime);
+
+                } else {
+                    Log.i(TAG, "more than 10Seconds");
+                    Log.i(TAG, "Beacon detected with id1: " + beaconID + " id2:" + beaconMajor + " id3: " + beaconMinor);
+                    beaconService.putExtra("beacon_ID", beaconID);
+                    beaconService.putExtra("beacon_major", beaconMajor);
+                    beaconService.putExtra("beacon_minor", beaconMinor);
+                    startService(beaconService);
+                    seenBeacons.put(listItem, unixTime);
+
+                }
+
+                }else {
+                Log.i(TAG, "no prev. beacon found");
+                Log.i(TAG, "Beacon detected with id1: " + beaconID + " id2:" + beaconMajor + " id3: " + beaconMinor);
+                beaconService.putExtra("beacon_ID", beaconID);
+                beaconService.putExtra("beacon_major", beaconMajor);
+                beaconService.putExtra("beacon_minor", beaconMinor);
+                startService(beaconService);
+                seenBeacons.put(listItem, unixTime);
+            }
+
         }
     }
 }
