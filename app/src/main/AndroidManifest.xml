@@ -41,13 +41,15 @@
             android:parentActivityName="com.wordpress.interactiveevents.interactive_events.LoginActivity" >
         </activity>
 
-        <service android:name=".BeaconDataService">
+        <service android:name=".BeaconDataService"
+            android:stopWithTask="true"/>
 
-        </service>
 
         <!--
         <activity android:name=".BleActivity">
+
         </activity>
+
         -->
 
         <activity
