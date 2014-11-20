@@ -1,5 +1,8 @@
 package com.wordpress.interactiveevents.interactive_events;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 /**
@@ -16,6 +19,8 @@ public class ModulesRequest extends SpringAndroidSpiceRequest<ModulesList> {
 
     @Override
     public ModulesList loadDataFromNetwork() throws Exception {
+        String access_token = Storage.getAccessToken();
+        Log.d("login", "inModulesRequest, retrieved access_token=" + access_token);
         String url = String.format("http://private-582d6-interactiveevents.apiary-mock.com/events/%s/modules", eventId);
         return getRestTemplate().getForObject(url, ModulesResponse.class).getModulesList();
     }
