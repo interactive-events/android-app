@@ -2,16 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wordpress.interactiveevents.interactive_events" >
 
+
     <uses-sdk
         android:minSdkVersion="18"
         android:targetSdkVersion="19" />
 
     <application
+
         android:name=".BleActivity"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -39,13 +41,15 @@
             android:parentActivityName="com.wordpress.interactiveevents.interactive_events.LoginActivity" >
         </activity>
 
-        <service android:name=".BeaconDataService">
+        <service android:name=".BeaconDataService"
+            android:stopWithTask="true"/>
 
-        </service>
 
         <!--
         <activity android:name=".BleActivity">
+
         </activity>
+
         -->
 
         <activity
