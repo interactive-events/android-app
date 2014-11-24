@@ -1,9 +1,6 @@
 package com.wordpress.interactiveevents.interactive_events;
 
-import android.util.ArrayMap;
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 

@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +85,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private Button mainBtn;
     private Button urlBtn;
     private Button beaconBtn;
+    private Button pushBtn;
     final Context context = this;
 
     static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
@@ -178,10 +177,30 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 beaconService.putExtra("beacon_minor", 1);
 
                 Log.i("#########dafuq#########", "gg?");*/
+
                     startActivity(eventList);
                 }
             });
-            //WEBVIEWTESTBEACONS
+
+            //KNAPPTESTBEACONS
+            pushBtn = (Button) findViewById(R.id.pushButton);
+            pushBtn.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    //beaconTable(beaconID, beaconMajor, beaconMinor);
+                    Intent pushApp = new Intent(getApplicationContext(), AndroidMobilePushApp.class);
+
+/*
+                beaconService.putExtra("beacon_ID", "1");
+                beaconService.putExtra("beacon_major", 1);
+                beaconService.putExtra("beacon_minor", 1);
+
+                Log.i("#########dafuq#########", "gg?");*/
+                    startActivity(pushApp);
+                }
+            });
+
         }
 
     }
@@ -607,6 +626,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
         }
     }
+
+
+
+
     //TESTAR [BEACON sens]
     public class getBeaconEvent extends AsyncTask<Void, Void, String> {
         Integer beaconMajor,beaconMinor;

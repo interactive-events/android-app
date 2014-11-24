@@ -56,7 +56,7 @@ public class Storage {
     }
 
     static boolean accessTokenValid() {
-
+        // return false
         long currentTimeSinceEpoch = new Date().getTime();
         long expireTimeSinceEpoch = getExpireDateForNewestToken();
         // access_token has expired
