@@ -137,7 +137,11 @@ public class BeaconDataService extends Service{
             //String postString = API+"events/"+evntID+"/checkins?access_token="+accToken;
             //Change below row to this when acctoken is implemented.
             //Also change method call at bottom(row ~262) to send the token. At the moment null value is passed to this method.
-            String postString = API+"events/"+evntID+"/checkins?access_token=123";
+
+            String access_token = Storage.getAccessToken();
+            String access_param = "?access_token="+access_token;
+
+            String postString = API+"events/"+evntID+"/checkins"+access_param;
 
 
             HttpClient client = new DefaultHttpClient();
@@ -159,11 +163,14 @@ public class BeaconDataService extends Service{
 
             InputStream inputStream = null;
 
+            String access_token = Storage.getAccessToken();
+            String access_param = "?access_token="+access_token;
+
             // Making HTTP request
             try {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(API+"events?beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
+                HttpGet httpGet = new HttpGet(API+"events"+access_param+"&beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
                 Log.i(TAG, "server returned status code "+httpResponse.getStatusLine());

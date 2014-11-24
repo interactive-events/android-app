@@ -19,9 +19,12 @@ public class ModulesRequest extends SpringAndroidSpiceRequest<ModulesList> {
 
     @Override
     public ModulesList loadDataFromNetwork() throws Exception {
+
         String access_token = Storage.getAccessToken();
-        Log.d("login", "inModulesRequest, retrieved access_token=" + access_token);
-        String url = String.format("http://private-582d6-interactiveevents.apiary-mock.com/events/%s/modules", eventId);
+        String access_param = "?access_token="+access_token;
+
+        String url = String.format("http://private-582d6-interactiveevents.apiary-mock.com/events/%s/modules"+access_param, eventId);
+        Log.d("access_token", "In ModulesRequest url="+url);
         return getRestTemplate().getForObject(url, ModulesResponse.class).getModulesList();
     }
 

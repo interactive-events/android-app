@@ -17,7 +17,8 @@
         android:id="@+id/imageView"
         android:scaleType="centerInside"
         android:src="@drawable/inactlogo"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -72,46 +73,47 @@
                 android:background="@color/cs_green"
                 android:textColor="@color/cs_white" />
 
-                <LinearLayout
-                    android:orientation="vertical"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test buttons"
+                    android:id="@+id/info"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle=""
+                    android:autoText="false"
+                    android:textSize="20dp"
+                    android:layout_marginTop="20dp" />
+
+                <Button
+                    android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_below="@+id/text"
+                    android:layout_marginTop="0dp"
+                    android:text="Show Alert Box" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Test buttons"
-                        android:id="@+id/info"
-                        android:layout_gravity="center_horizontal"
-                        android:textStyle=""
-                        android:autoText="false"
-                        android:textSize="20dp"
-                        android:layout_marginTop="20dp" />
+                <Button
+                    android:id="@+id/buttonUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Go to surprise" />
 
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/text"
-                        android:layout_marginTop="0dp"
-                        android:text="Show Alert Box" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Events"
+                    android:id="@+id/beaconButton" />
 
-                    <Button
-                        android:id="@+id/buttonUrl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Go to surprise" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Events"
-                        android:id="@+id/beaconButton" />
-
-                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
