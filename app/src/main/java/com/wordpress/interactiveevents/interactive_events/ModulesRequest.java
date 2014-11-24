@@ -22,10 +22,12 @@ public class ModulesRequest extends SpringAndroidSpiceRequest<ModulesList> {
 
         String access_token = Storage.getAccessToken();
         String access_param = "?access_token="+access_token;
-
+        // from apiary
         String url = String.format("http://private-582d6-interactiveevents.apiary-mock.com/events/%s/modules"+access_param, eventId);
-        Log.d("access_token", "In ModulesRequest url="+url);
-        return getRestTemplate().getForObject(url, ModulesResponse.class).getModulesList();
+        // from api
+        String url2 = String.format("http://interactive-events.elasticbeanstalk.com/events/%s/activities"+access_param, eventId);
+        //Log.d("access_token", "In ModulesRequest url="+url2);
+        return getRestTemplate().getForObject(url2, ModulesResponse.class).getModulesList();
     }
 
     /**

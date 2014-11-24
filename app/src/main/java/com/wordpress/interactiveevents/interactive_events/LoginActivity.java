@@ -99,15 +99,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
         Storage.initSharedPrefs(context);
         if (Storage.accessTokenValid()) {
             // skip login-screen and show event-list-home-screen
             Intent eventList = new Intent(getApplicationContext(), EventListActivity.class);
             //eventList.putExtra("someVariable", "someValue");
             startActivity(eventList);
+
+            finish(); // remove this activity from stack, this activity is never shown to the user
+            // if access_token is still valid
+            // this prevents being able to press the backwards key and see an empty screen
+
         } else {
+
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
             iv = new ImageView(context);
             iv = (ImageView) findViewById(R.id.imageView);
@@ -164,23 +170,22 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             //WEBVIEWTEST SLUT
 
             //KNAPPTESTBEACONS
-            beaconBtn = (Button) findViewById(R.id.beaconButton);
+/*            beaconBtn = (Button) findViewById(R.id.beaconButton);
             beaconBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     //beaconTable(beaconID, beaconMajor, beaconMinor);
                     Intent eventList = new Intent(getApplicationContext(), EventListActivity.class);
-/*
-                beaconService.putExtra("beacon_ID", "1");
-                beaconService.putExtra("beacon_major", 1);
-                beaconService.putExtra("beacon_minor", 1);
 
-                Log.i("#########dafuq#########", "gg?");*/
+                    //beaconService.putExtra("beacon_ID", "1");
+                    //beaconService.putExtra("beacon_major", 1);
+                    //beaconService.putExtra("beacon_minor", 1);
+                    //Log.i("#########dafuq#########", "gg?");
 
                     startActivity(eventList);
                 }
-            });
+            });*/
 
             //KNAPPTESTBEACONS
             pushBtn = (Button) findViewById(R.id.pushButton);
@@ -613,7 +618,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 //Log.e("n", inputName.getText() + "." + inputEmail.getText());
 
                 startActivity(nextScreen);
-                //finish();
+                finish(); // prevents going back to login-screen when successfully logged in
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

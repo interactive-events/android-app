@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
 
-    <!-- Login progress -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -20,6 +19,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="25dp" />
 
+    <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -104,11 +104,13 @@
                     android:layout_height="wrap_content"
                     android:text="Go to surprise" />
 
+                <!--
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Events"
                     android:id="@+id/beaconButton" />
+                -->
 
                 <Button
                     android:layout_width="match_parent"

@@ -39,7 +39,8 @@ public class EventListActivity extends Activity {
 
     static int TIMEOUT_MILLISEC = 3000000;
     // http://private-274c2-interactiveevents.apiary-mock.com/
-    static String API = "http://private-582d6-interactiveevents.apiary-mock.com/";
+    //static String API = "http://private-582d6-interactiveevents.apiary-mock.com/";
+    static String API = "http://interactive-events.elasticbeanstalk.com/";
     TableLayout eventsTable;
     GetEventsTask getEventsTask;
 
@@ -128,7 +129,7 @@ public class EventListActivity extends Activity {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpGet = new HttpGet(API+"events"+access_param);
-                Log.d("access_token", "url when request for events="+API+"events"+access_param);
+                //Log.d("access_token", "url when request for events="+API+"events"+access_param);
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
@@ -217,7 +218,8 @@ public class EventListActivity extends Activity {
                     tr.addView(labelTitle);
 
                     TextView labelDesc = new TextView(context);
-                    labelDesc.setText(description);
+                    //labelDesc.setText(description);
+                    labelDesc.setText("");
                     labelDesc.setTextColor(Color.BLACK);
                     tr.addView(labelDesc);
 
