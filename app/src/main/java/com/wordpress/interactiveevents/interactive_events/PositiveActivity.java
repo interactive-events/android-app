@@ -1,7 +1,7 @@
 package com.wordpress.interactiveevents.interactive_events;
 
 import android.app.Activity;
-        import android.os.Bundle;
+import android.os.Bundle;
 import android.widget.Toast;
 
 public class PositiveActivity extends Activity {

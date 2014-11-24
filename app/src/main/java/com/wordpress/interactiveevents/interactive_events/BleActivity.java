@@ -1,25 +1,19 @@
 package com.wordpress.interactiveevents.interactive_events;
 
-import android.app.Activity;
 import android.app.Application;
-import android.app.IntentService;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
-import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-import org.altbeacon.beacon.service.RangingData;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
-import org.altbeacon.beacon.RangeNotifier;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

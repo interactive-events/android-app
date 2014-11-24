@@ -109,6 +109,12 @@
                         android:text="Events"
                         android:id="@+id/beaconButton" />
 
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Push"
+                        android:id="@+id/pushButton" />
+
                 </LinearLayout>
 
         </LinearLayout>
