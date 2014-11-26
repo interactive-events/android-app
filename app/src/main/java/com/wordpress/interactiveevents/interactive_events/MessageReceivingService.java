@@ -15,15 +15,17 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-/*
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.sns.AmazonSNSClient;
-import com.amazonaws.services.sns.model.CreatePlatformEndpointRequest;
-*/
+
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /*
  * This service is designed to run in the background and receive messages from gcm. If the app is in the foreground
@@ -33,12 +35,8 @@ import java.io.IOException;
 public class MessageReceivingService extends Service {
     private GoogleCloudMessaging gcm;
     public static SharedPreferences savedValues;
+    private String address = "http://interactive-events.elasticbeanstalk.com/users/"+Storage.getUserId()+"?access_token="+Storage.getAccessToken();
 
-/*
-    BasicAWSCredentials credentials = new BasicAWSCredentials("CREDENTIALS IN SERCRETSECRET","SERCRETSECRETSERCRETSECRET");
-    AmazonSNSClient dsa = new AmazonSNSClient(credentials);
-    CreatePlatformEndpointRequest asd = new CreatePlatformEndpointRequest();
-  */
 
 
 
@@ -107,7 +105,31 @@ public class MessageReceivingService extends Service {
                 try {
                     token = gcm.register(getString(R.string.project_number));
                     Log.i("registrationId", token);
-                } 
+
+                    //HTTP PUT GCM TOKEN TO SERVER
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPut put = new HttpPut(address);
+
+                    StringEntity data = null;
+                    try {
+
+                        String d = String.format("{\"gcmToken\":\"%s\"}", token);
+
+                        data = new StringEntity(d);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    //httpPost.setHeader("Accept", "application/json");
+
+                    data.setContentType("application/json; charset=UTF-8"); //; charset=UTF-8
+                    //data.setContentEncoding("application/json; charset=UTF-8");
+
+                    put.setEntity(data);
+                    put.setHeader("Content-Type", "application/json; charset=UTF-8");
+                    client.execute(put);
+                    //END HTTP PUT TO SERVER
+
+                }
                 catch (IOException e) {
                     Log.i("Registration Error", e.getMessage());
                 }
