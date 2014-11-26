@@ -36,6 +36,10 @@ public class MessageReceivingService extends Service {
     private GoogleCloudMessaging gcm;
     public static SharedPreferences savedValues;
     private String address = "http://interactive-events.elasticbeanstalk.com/users/"+Storage.getUserId()+"?access_token="+Storage.getAccessToken();
+    private static final String TAG = ".MessageReceivingService";
+
+
+
 
 
 
@@ -127,6 +131,7 @@ public class MessageReceivingService extends Service {
                     put.setEntity(data);
                     put.setHeader("Content-Type", "application/json; charset=UTF-8");
                     client.execute(put);
+                    Log.i(TAG,"HTTP PUT GOING TO: "+address);
                     //END HTTP PUT TO SERVER
 
                 }
