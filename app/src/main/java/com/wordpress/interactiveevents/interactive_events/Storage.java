@@ -37,6 +37,16 @@ public class Storage {
         editor.commit();
     }
 
+    static void setUserId(String user_id) {
+        // Need an Editor object to make preference changes
+        // All objects are from android.context.Context?
+        SharedPreferences.Editor editor = auth_prefs.edit();
+        Log.d("login", "setUserId="+user_id);
+        editor.putString("user_id", user_id);
+        // Commit the edit!
+        editor.commit();
+    }
+
     static String getAccessToken() {
         //Log.d("login", "fromSharedPrefs, access_token=" + auth_prefs.getString("access_token", "No token stored"));
         String access_token = auth_prefs.getString("access_token", "");
@@ -53,6 +63,14 @@ public class Storage {
             Log.d("access_token", "No expire date stored in SharedPreferences");
         }
         return expires_in;
+    }
+
+    static String getUserId() {
+        String user_id = auth_prefs.getString("user_id", "");
+        if (user_id.equals("")) {
+            Log.d("access_token", "No user_id stored in SharedPreferences");
+        }
+        return user_id;
     }
 
     static boolean accessTokenValid() {

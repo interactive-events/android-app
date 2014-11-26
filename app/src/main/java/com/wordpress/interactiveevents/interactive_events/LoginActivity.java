@@ -583,6 +583,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             //Log.d("login", "before Storage.setNewAccessToken(access_token) call");
             Storage.setNewAccessToken(access_token);
             Storage.setExpireDateForNewestToken(expires_in);
+            Storage.setUserId(user_id);
             //Log.d("login", "after Storage.setNewAccessToken(access_token) call");
             /*try {
                 // Simulate network access.
