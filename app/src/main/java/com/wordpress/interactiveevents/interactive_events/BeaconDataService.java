@@ -37,7 +37,7 @@ public class BeaconDataService extends Service{
     private static final String TAG = ".BeaconDataService";
     getBeaconEvent getBeaconEvent;
 
-    static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
+    static String API = "http://interactive-events.elasticbeanstalk.com/";
 
 
 
@@ -79,7 +79,7 @@ public class BeaconDataService extends Service{
 
 
     //KNAPPTEST2
-    private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
+    private void openBeaconAlert(final String eventName,final String eventId, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeaconDataService.this);
 
         alertDialogBuilder.setCancelable(false);
@@ -102,6 +102,7 @@ public class BeaconDataService extends Service{
                 Intent positveActivity = new Intent(getApplicationContext(), EventActivity.class);
                 positveActivity.putExtra("event_title", eventName);
                 positveActivity.putExtra("event_desc", eventDesc);
+                positveActivity.putExtra("eventId", eventId);
                 positveActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(positveActivity);
 
@@ -149,7 +150,8 @@ public class BeaconDataService extends Service{
 
             try {
                 Log.i(TAG,"Sending HTTP POST TO: "+postString);
-                client.execute(post);
+                HttpResponse httpResponse = client.execute(post);
+                Log.i(TAG, "server returned status code "+httpResponse.getStatusLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -245,13 +247,13 @@ public class BeaconDataService extends Service{
                 {
                     JSONObject event = beacons.getJSONObject(i).getJSONObject("event");
                     final String event_title = event.getString("title");
-                    final String beacon_id = event.getString("beaconId");
+                    final String beacon_id = event.getString("beacon");
                     final String event_desc = event.getString("description");
                     final String event_id = event.getString("id");
                     Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
-                    openBeaconAlert(event_title,beacon_id,event_desc);
+                    openBeaconAlert(event_title,event_id,event_desc);
 
                     //checkin http post
                     Thread thread = new Thread(new Runnable(){
