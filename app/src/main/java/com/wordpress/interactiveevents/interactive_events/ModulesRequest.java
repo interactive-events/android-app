@@ -26,7 +26,7 @@ public class ModulesRequest extends SpringAndroidSpiceRequest<ModulesList> {
         String url = String.format("http://private-582d6-interactiveevents.apiary-mock.com/events/%s/modules"+access_param, eventId);
         // from api
         String url2 = String.format("http://interactive-events.elasticbeanstalk.com/events/%s/activities"+access_param, eventId);
-        //Log.d("access_token", "In ModulesRequest url="+url2);
+        Log.d("access_token", "In ModulesRequest url2="+url2);
         return getRestTemplate().getForObject(url2, ModulesResponse.class).getModulesList();
     }
 

@@ -16,7 +16,7 @@ public class WebViewActivity extends Activity {
     private WebView webView;
     private Button homeBtn;
     private String eventId;
-    private String moduleId = "1";
+    private String activityId = "1";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +25,8 @@ public class WebViewActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
-            moduleId = extras.getString("moduleId");
-            Log.d("modulelist", "eventId="+eventId+" moduleId="+moduleId);
+            activityId = extras.getString("activityId");
+            Log.d("modulelist", "eventId="+eventId+" activityId="+activityId);
         }
 
         webView = (WebView) findViewById(R.id.webView1);

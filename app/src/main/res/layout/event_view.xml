@@ -107,14 +107,14 @@
             android:layout_height="146dp"
             android:id="@+id/listView"
             android:layout_weight="0.53" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test Request"
-            android:id="@+id/button3"
-            android:layout_gravity="right" />
-
+        <!--
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Request"
+                    android:id="@+id/button3"
+                    android:layout_gravity="right" />
+        -->
     </LinearLayout>
 
 </LinearLayout>
