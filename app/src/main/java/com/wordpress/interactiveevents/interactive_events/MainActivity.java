@@ -28,9 +28,10 @@ public class MainActivity extends Activity{
         // Retrieve data from MainActivity on item click event
         Intent p = getIntent();
         position = p.getExtras().getInt("id");
-
+        */
         ImageAdapter imageAdapter = new ImageAdapter(this);
         List<ImageView> images = new ArrayList<ImageView>();
+
 
         // Retrieve all the images
         for (int i = 0; i < imageAdapter.getCount(); i++) {
@@ -39,12 +40,12 @@ public class MainActivity extends Activity{
             imageView.setScaleType(ImageView.ScaleType.CENTER);
             images.add(imageView);
         }
-        */
+
         // Set the images into ViewPager
-        //ImagePagerAdapter pageradapter = new ImagePagerAdapter(images);
-        //ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
-        //viewpager.setAdapter(pageradapter);
+        ImagePagerAdapter pageradapter = new ImagePagerAdapter(images);
+        ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
+        viewpager.setAdapter(pageradapter);
         // Show images following the position
-        //viewpager.setCurrentItem(position);
+        viewpager.setCurrentItem(position);
     }
 }
