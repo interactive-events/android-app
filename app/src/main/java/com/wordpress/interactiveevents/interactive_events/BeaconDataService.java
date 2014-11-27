@@ -79,7 +79,7 @@ public class BeaconDataService extends Service{
 
 
     //KNAPPTEST2
-    private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
+    private void openBeaconAlert(final String eventName,final String eventId, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeaconDataService.this);
 
         alertDialogBuilder.setCancelable(false);
@@ -102,6 +102,7 @@ public class BeaconDataService extends Service{
                 Intent positveActivity = new Intent(getApplicationContext(), EventActivity.class);
                 positveActivity.putExtra("event_title", eventName);
                 positveActivity.putExtra("event_desc", eventDesc);
+                positveActivity.putExtra("eventId", eventId);
                 positveActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(positveActivity);
 
@@ -252,7 +253,7 @@ public class BeaconDataService extends Service{
                     Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
-                    openBeaconAlert(event_title,beacon_id,event_desc);
+                    openBeaconAlert(event_title,event_id,event_desc);
 
                     //checkin http post
                     Thread thread = new Thread(new Runnable(){

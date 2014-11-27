@@ -16,7 +16,9 @@ public class WebViewActivity extends Activity {
     private WebView webView;
     private Button homeBtn;
     private String eventId;
+    private String urlStr;
     private String activityId = "1";
+    private static final String TAG = ".WebviewActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,8 @@ public class WebViewActivity extends Activity {
         if (extras != null) {
             eventId = extras.getString("eventId");
             activityId = extras.getString("activityId");
+            urlStr = extras.getString("urlStr");
+            Log.i(TAG,"##URL STR##"+urlStr);
             Log.d("modulelist", "eventId="+eventId+" activityId="+activityId);
         }
 
@@ -36,7 +40,13 @@ public class WebViewActivity extends Activity {
         String access_param = "?access_token="+access_token;
 
         //webView.loadUrl("http://www.aftonbladet.se");
-        webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push"+access_param);
+        if(urlStr != null && !urlStr.isEmpty()){
+            webView.loadUrl(urlStr);
+            Log.i(TAG,"### JAG LADDAR URL ### "+urlStr);
+        } else {
+            webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push"+access_param);
+        }
+
         //webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push"+access_param, eventId, moduleId);
         //String url = String.format("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push"+access_param, eventId, moduleId);
 

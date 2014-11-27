@@ -73,20 +73,33 @@ public class MessageReceivingService extends Service {
     }
 
     protected static void saveToLog(Bundle extras, Context context){
+        String urlStr = null;
         SharedPreferences.Editor editor=savedValues.edit();
         String numOfMissedMessages = context.getString(R.string.num_of_missed_messages);
         int linesOfMessageCount = 0;
         for(String key : extras.keySet()){
             String line = String.format("%s=%s", key, extras.getString(key));
+            Log.i(TAG,"####GETSTRING####"+line);
+            if (line.contains("default")){
+                urlStr = line.substring(line.indexOf("=")+1);
+                Log.i(TAG,"URLSTR= "+urlStr);
+            }
             editor.putString("MessageLine" + linesOfMessageCount, line);
             linesOfMessageCount++;
+
         }
+
         editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
         editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
         editor.putInt(numOfMissedMessages, savedValues.getInt(numOfMissedMessages, 0) + 1);
         editor.commit();
         //postNotification(new Intent(context, AndroidMobilePushApp.class), context);
-        postNotification(new Intent(context, WebViewActivity.class), context);
+        Log.i(TAG,"URLSTRTILLINTENT="+urlStr);
+        Intent pushIntent = new Intent(context, WebViewActivity.class);
+        pushIntent.putExtra("urlStr", urlStr);
+
+
+        postNotification(pushIntent, context);
     }
 
     protected static void postNotification(Intent intentAction, Context context){
