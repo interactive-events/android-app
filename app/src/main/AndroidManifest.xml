@@ -57,12 +57,10 @@
 
         <service
             android:name=".MessageReceivingService"
-            android:label="com.amazonaws.androidtest.MessageReceivingService"
             android:stopWithTask="true">
             <intent-filter>
-                <action android:name="com.amazonaws.androidtest.AndroidMobilePushApp" />
-                <action android:name="com.amazonaws.androidtest.ExternalReceiver" />
-                <category android:name="com.amazonaws.androidtest" />
+                <action android:name="com.wordpress.interactiveevents.interactive_events.AndroidMobilePushApp" />
+                <action android:name="com.wordpress.interactiveevents.interactive_events.ExternalReceiver" />
             </intent-filter>
         </service>
 

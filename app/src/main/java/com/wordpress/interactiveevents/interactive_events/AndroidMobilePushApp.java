@@ -21,6 +21,8 @@ public class AndroidMobilePushApp extends Activity {
     // Since this activity is SingleTop, there can only ever be one instance. This variable corresponds to this instance.
     public static Boolean inBackground = true;
 
+
+    //TODO https://developer.android.com/google/gcm/client.html kolla in sidan för push via google istället för SNS Amazon
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         numOfMissedMessages = getString(R.string.num_of_missed_messages);
