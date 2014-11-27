@@ -19,7 +19,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="25dp" />
 
-    <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -85,7 +84,6 @@
                     android:text="Test buttons"
                     android:id="@+id/info"
                     android:layout_gravity="center_horizontal"
-                    android:textStyle=""
                     android:autoText="false"
                     android:textSize="20dp"
                     android:layout_marginTop="20dp" />
@@ -125,6 +123,4 @@
     </ScrollView>
 
 </LinearLayout>
-
-
 
