@@ -85,7 +85,8 @@ public class MessageReceivingService extends Service {
         editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
         editor.putInt(numOfMissedMessages, savedValues.getInt(numOfMissedMessages, 0) + 1);
         editor.commit();
-        postNotification(new Intent(context, AndroidMobilePushApp.class), context);
+        //postNotification(new Intent(context, AndroidMobilePushApp.class), context);
+        postNotification(new Intent(context, WebViewActivity.class), context);
     }
 
     protected static void postNotification(Intent intentAction, Context context){
@@ -93,7 +94,7 @@ public class MessageReceivingService extends Service {
 
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentAction, PendingIntent.FLAG_ONE_SHOT);
         final Notification notification = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("Message Received!")
+                .setContentTitle("[PLACEHOLDER] Received!")
                 .setContentText("")
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

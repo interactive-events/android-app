@@ -37,7 +37,7 @@ public class BeaconDataService extends Service{
     private static final String TAG = ".BeaconDataService";
     getBeaconEvent getBeaconEvent;
 
-    static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
+    static String API = "http://interactive-events.elasticbeanstalk.com/";
 
 
 
@@ -149,7 +149,8 @@ public class BeaconDataService extends Service{
 
             try {
                 Log.i(TAG,"Sending HTTP POST TO: "+postString);
-                client.execute(post);
+                HttpResponse httpResponse = client.execute(post);
+                Log.i(TAG, "server returned status code "+httpResponse.getStatusLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -245,7 +246,7 @@ public class BeaconDataService extends Service{
                 {
                     JSONObject event = beacons.getJSONObject(i).getJSONObject("event");
                     final String event_title = event.getString("title");
-                    final String beacon_id = event.getString("beaconId");
+                    final String beacon_id = event.getString("beacon");
                     final String event_desc = event.getString("description");
                     final String event_id = event.getString("id");
                     Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
