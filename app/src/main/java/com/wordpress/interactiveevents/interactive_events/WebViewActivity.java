@@ -15,14 +15,30 @@ public class WebViewActivity extends Activity {
 
     private WebView webView;
     private Button homeBtn;
+    private String eventId;
+    private String moduleId = "1";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            eventId = extras.getString("eventId");
+            moduleId = extras.getString("moduleId");
+            Log.d("modulelist", "eventId="+eventId+" moduleId="+moduleId);
+        }
+
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.aftonbladet.se");
+
+        String access_token = Storage.getAccessToken();
+        String access_param = "?access_token="+access_token;
+
+        //webView.loadUrl("http://www.aftonbladet.se");
+        webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push"+access_param);
+        //webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push"+access_param, eventId, moduleId);
+        //String url = String.format("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push"+access_param, eventId, moduleId);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -45,7 +61,5 @@ public class WebViewActivity extends Activity {
 
         });
 
-
     }
-
 }

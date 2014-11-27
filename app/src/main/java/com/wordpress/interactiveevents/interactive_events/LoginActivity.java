@@ -11,8 +11,8 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,40 +28,42 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/* testar knapp*/
-
-
-
-
 /**
  * A login screen that offers login via email/password.
-
  */
-public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
+public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
-    // a comment 2
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -69,6 +71,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world", "a@a.a:asdfg"
     };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -82,6 +85,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private Button mainBtn;
     private Button urlBtn;
     private Button beaconBtn;
+    private Button pushBtn;
     final Context context = this;
 
     static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
@@ -90,105 +94,128 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     String beaconID;
     Integer beaconMajor,beaconMinor;
 
-
-
-
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        Storage.initSharedPrefs(context);
+        if (Storage.accessTokenValid()) {
+            // skip login-screen and show event-list-home-screen
+            Intent eventList = new Intent(getApplicationContext(), EventListActivity.class);
+            //eventList.putExtra("someVariable", "someValue");
+            startActivity(eventList);
 
+            finish(); // remove this activity from stack, this activity is never shown to the user
+            // if access_token is still valid
+            // this prevents being able to press the backwards key and see an empty screen
 
+        } else {
 
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
+            iv = new ImageView(context);
+            iv = (ImageView) findViewById(R.id.imageView);
 
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+            // Set up the login form.
+            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+            populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                        attemptLogin();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
+            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            mEmailSignInButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attemptLogin();
+                }
+            });
 
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+            //KNAPPTEST
+            mainBtn = (Button) findViewById(R.id.button);
+            mainBtn.setOnClickListener(new OnClickListener() {
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+                @Override
+                public void onClick(View v) {
+                    openAlert(v);
+                }
+            });
 
-        //KNAPPTEST
-        mainBtn = (Button) findViewById(R.id.button);
-        mainBtn.setOnClickListener(new OnClickListener() {
+            //WEBVIEWTEST
+            urlBtn = (Button) findViewById(R.id.buttonUrl);
 
-            @Override
-            public void onClick(View v) {
+            urlBtn.setOnClickListener(new OnClickListener() {
 
-                openAlert(v);
-            }
-        });
+                @Override
+                public void onClick(View arg0) {
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    startActivity(intent);
+                }
 
-        //WEBVIEWTEST
-        urlBtn = (Button) findViewById(R.id.buttonUrl);
+            });
+            //WEBVIEWTEST SLUT
 
-        urlBtn.setOnClickListener(new OnClickListener() {
+            //KNAPPTESTBEACONS
+/*            beaconBtn = (Button) findViewById(R.id.beaconButton);
+            beaconBtn.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(context, WebViewActivity.class);
-                startActivity(intent);
-            }
+                @Override
+                public void onClick(View v) {
+                    //beaconTable(beaconID, beaconMajor, beaconMinor);
+                    Intent eventList = new Intent(getApplicationContext(), EventListActivity.class);
 
-        });
-        //WEBVIEWTEST SLUT
+                    //beaconService.putExtra("beacon_ID", "1");
+                    //beaconService.putExtra("beacon_major", 1);
+                    //beaconService.putExtra("beacon_minor", 1);
+                    //Log.i("#########dafuq#########", "gg?");
 
-        //KNAPPTESTBEACONS
-        beaconBtn = (Button) findViewById(R.id.beaconButton);
-        beaconBtn.setOnClickListener(new OnClickListener() {
+                    startActivity(eventList);
+                }
+            });*/
 
-            @Override
-            public void onClick(View v) {
-                //beaconTable(beaconID, beaconMajor, beaconMinor);
-                Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
+            //KNAPPTESTBEACONS
+            pushBtn = (Button) findViewById(R.id.pushButton);
+            pushBtn.setOnClickListener(new OnClickListener() {
 
+                @Override
+                public void onClick(View v) {
+                    //beaconTable(beaconID, beaconMajor, beaconMinor);
+                    Intent pushApp = new Intent(getApplicationContext(), AndroidMobilePushApp.class);
 
+/*
                 beaconService.putExtra("beacon_ID", "1");
                 beaconService.putExtra("beacon_major", 1);
                 beaconService.putExtra("beacon_minor", 1);
 
-                Log.i("#########dafuq#########", "gg?");
-                startService(beaconService);
-            }
-        });
+                Log.i("#########dafuq#########", "gg?");*/
+                    startActivity(pushApp);
+                }
+            });
 
-        //WEBVIEWTESTBEACONS
-
+        }
 
     }
+
     public void beaconTable(String beaconID, Integer beaconMajor, Integer beaconMinor) {
         //showProgress(true);
 
         getBeaconEvent = new getBeaconEvent(beaconID, beaconMajor, beaconMinor);
         getBeaconEvent.execute((Void) null);
-
-
     }
-
 
     //KNAPPTEST
     private void openAlert(View view) {
@@ -288,7 +315,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         boolean cancel = false;
         View focusView = null;
 
-
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
@@ -322,7 +348,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true; //email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
@@ -449,7 +475,117 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            // do a POST http(s) request, with
+            // grant_type, client_id, client_secret, username, password
+            // to http://interactive-events.elasticbeanstalk.com/oauth/token
+            // save token obj in some persistent storage...
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://interactive-events.elasticbeanstalk.com/oauth/token");
+
+            // POST parameters
+ /*           List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(5);
+            nameValuePair.add(new BasicNameValuePair("grant_type", "password"));
+            nameValuePair.add(new BasicNameValuePair("client_id", "1"));
+            nameValuePair.add(new BasicNameValuePair("client_secret", "secret"));
+            nameValuePair.add(new BasicNameValuePair("username", mEmail));
+            nameValuePair.add(new BasicNameValuePair("password", mPassword));
+            Log.d("login", "nameValuePair="+nameValuePair.toString());
+            // Encode POST data into valid URL format before making HTTP request
+
+            UrlEncodedFormEntity entity = null;
             try {
+                entity = new UrlEncodedFormEntity(nameValuePair);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            entity.setContentType("application/form-data");
+            httpPost.setEntity(entity);
+            httpPost.setHeader("Content-Type", "multipart/form-data;boundary=,");*/
+
+            StringEntity data = null;
+            try {
+                String d = String.format("{\"grant_type\":\"password\",\"client_id\":\"546df0e1509295c52832bee9\",\"client_secret\":\"thiIsForTheAndroidApp\",\"username\":\"%s\",\"password\":\"%s\"}", mEmail, mPassword);
+                data = new StringEntity(d);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            //httpPost.setHeader("Accept", "application/json");
+
+            data.setContentType("application/json; charset=UTF-8"); //; charset=UTF-8
+            //data.setContentEncoding("application/json; charset=UTF-8");
+            httpPost.setEntity(data);
+            httpPost.setHeader("Content-Type", "application/json; charset=UTF-8");
+
+            // Making the HTTP POST request
+            String result = null;
+            try {
+                HttpResponse response = httpClient.execute(httpPost);
+                String responseStatus = String.valueOf(response.getStatusLine());
+                Log.d("login", "response.getStatusLine="+responseStatus);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                StringBuilder builder = new StringBuilder();
+                for (String line = null; (line = reader.readLine()) != null;) {
+                    builder.append(line).append("\n");
+                }
+                result = builder.toString();
+                if (result != null) {
+                    //Log.d("login", "result="+result);
+                } else {
+                    Log.d("login", "Login http POST request failed");
+                    return false;
+                }
+                if (!responseStatus.equals("HTTP/1.1 200 OK")) {
+                    return false;
+                }
+            } catch (ClientProtocolException e) {
+                // Log exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Log exception
+                e.printStackTrace();
+            }
+            JSONObject jObj = null;
+            try {
+                jObj = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("login", "jObj="+jObj);
+            String access_token = null;
+            String refresh_token = null;
+            String user_id = null;
+            long expires_in = 0;
+            try {
+                access_token = (String) jObj.get("access_token");
+                Log.d("login", "Got access_token="+access_token);
+                refresh_token = (String) jObj.get("refresh_token");
+                user_id = (String) jObj.get("user_id");
+                expires_in = jObj.getLong("expires_in");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // TODO: save tokens in persistent storage
+
+         /*   SharedPreferences auth_prefs = getApplicationContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+            // Need an Editor object to make preference changes
+            // All objects are from android.context.Context?
+            SharedPreferences.Editor editor = auth_prefs.edit();
+            editor.putString("access_token", access_token);
+            // Commit the edits!
+            editor.commit();
+
+            Log.d("login", "fromSharedPrefs, access_token="+auth_prefs.getString("access_token", "No token stored"));
+*/
+            //Log.d("login", "before Storage.setNewAccessToken(access_token) call");
+            Storage.setNewAccessToken(access_token);
+            Storage.setExpireDateForNewestToken(expires_in);
+            Storage.setUserId(user_id);
+            //Log.d("login", "after Storage.setNewAccessToken(access_token) call");
+            /*try {
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -462,8 +598,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
-            }
-
+            }*/
             // TODO: register the new account here.
             return true;
         }
@@ -484,7 +619,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 //Log.e("n", inputName.getText() + "." + inputEmail.getText());
 
                 startActivity(nextScreen);
-                //finish();
+                finish(); // prevents going back to login-screen when successfully logged in
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -497,6 +633,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
         }
     }
+
+
+
+
     //TESTAR [BEACON sens]
     public class getBeaconEvent extends AsyncTask<Void, Void, String> {
         Integer beaconMajor,beaconMinor;
@@ -514,11 +654,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
             InputStream inputStream = null;
 
+            String access_token = Storage.getAccessToken();
+            String access_param = "?access_token="+access_token;
+
             // Making HTTP request
             try {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(API+"events?beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
+                HttpGet httpGet = new HttpGet(API+"events"+access_param+"&beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
                 Log.i("API", "server returned status code "+httpResponse.getStatusLine());
@@ -621,6 +764,3 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     }
     //TESTAR [BEACON sens]
 }
-
-
-

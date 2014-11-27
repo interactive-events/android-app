@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +34,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class BeaconDataService extends Service{
 
-
+    private static final String TAG = ".BeaconDataService";
     getBeaconEvent getBeaconEvent;
 
     static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
@@ -47,7 +47,6 @@ public class BeaconDataService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("#########ONSTARTCOMMAND#########", "did i almost do it ?");
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
@@ -58,13 +57,12 @@ public class BeaconDataService extends Service{
             String beaconMajor = extras.getString("beacon_major");
             String beaconMinor = extras.getString("beacon_minor");
 
-            Log.i("#########MAJOR#########", beaconMajor);
-            Log.i("#########MINOR#########", beaconMinor);
-            Log.i("#########ID#########", beaconID);
+            Log.i(TAG,"#########MAJOR#########"+ beaconMajor);
+            Log.i(TAG,"#########MINOR#########"+ beaconMinor);
+            Log.i(TAG,"#########ID#########"+ beaconID);
 
             getBeaconEvent = new getBeaconEvent(beaconID, beaconMajor, beaconMinor);
             getBeaconEvent.execute((Void) null);
-            Log.i("#########ONSTARTCOMMAND#########", "did i do it ?");
         }
         return 0;
     }
@@ -78,12 +76,13 @@ public class BeaconDataService extends Service{
     public void onCreate (){
     }
 
-  
+
 
     //KNAPPTEST2
     private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeaconDataService.this);
 
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setTitle("Red or Blue pill?");
         alertDialogBuilder.setMessage("Nearby event attended! \n Event name :"+eventName+"\n  Description: "+eventDesc);
         // set positive button: Yes message
@@ -131,26 +130,56 @@ public class BeaconDataService extends Service{
             this.beaconMinor = beaconMinor;
         }
 
+        //HTTP POST CHECKIN
+        private void beaconPost(String evntID, String accToken) {
+
+
+            //String postString = API+"events/"+evntID+"/checkins?access_token="+accToken;
+            //Change below row to this when acctoken is implemented.
+            //Also change method call at bottom(row ~262) to send the token. At the moment null value is passed to this method.
+
+            String access_token = Storage.getAccessToken();
+            String access_param = "?access_token="+access_token;
+
+            String postString = API+"events/"+evntID+"/checkins"+access_param;
+
+
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(postString);
+
+            try {
+                Log.i(TAG,"Sending HTTP POST TO: "+postString);
+                client.execute(post);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
         @Override
         protected String doInBackground(Void... params) {
-            Log.i("API", "Starting get api stuff");
+            Log.i(TAG, "Starting get api stuff");
 
             InputStream inputStream = null;
+
+            String access_token = Storage.getAccessToken();
+            String access_param = "?access_token="+access_token;
 
             // Making HTTP request
             try {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(API+"events?beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
+                HttpGet httpGet = new HttpGet(API+"events"+access_param+"&beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
-                Log.i("API", "server returned status code "+httpResponse.getStatusLine());
+                Log.i(TAG, "server returned status code "+httpResponse.getStatusLine());
 
                 //random debugging
-                Log.i("BEACONREQUEST", "request to server: "+httpGet.getRequestLine());
-                Log.i("TESTARRANDOMSHIT", "beaconID="+beaconID);
-                Log.i("TESTARRANDOMSHIT2", "beaconsMinor="+beaconMinor);
-                Log.i("TESTARRANDOMSHIT3", "beaconsMajor="+beaconMajor);
+                Log.i(TAG, "request to server: "+httpGet.getRequestLine());
+                Log.i(TAG, "beaconID="+beaconID);
+                Log.i(TAG, "beaconsMinor="+beaconMinor);
+                Log.i(TAG, "beaconsMajor="+beaconMajor);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 inputStream = httpEntity.getContent();
 
@@ -187,9 +216,9 @@ public class BeaconDataService extends Service{
             }
 
             if(result != null) {
-                Log.i("API", result);
+                Log.i(TAG, result);
             } else {
-                Log.e("API", "failed server connections or something!");
+                Log.e(TAG, "failed server connections or something!");
                 return null;
             }
             return result;
@@ -218,10 +247,27 @@ public class BeaconDataService extends Service{
                     final String event_title = event.getString("title");
                     final String beacon_id = event.getString("beaconId");
                     final String event_desc = event.getString("description");
-                    Log.i("API", event_title+", "+beacon_id+", "+event_desc);
+                    final String event_id = event.getString("id");
+                    Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
                     openBeaconAlert(event_title,beacon_id,event_desc);
+
+                    //checkin http post
+                    Thread thread = new Thread(new Runnable(){
+                    @Override
+                        public void run() {
+                            try {
+                                Log.i(TAG,"yay! :D");
+                                beaconPost(event_id,null);
+                            } catch (Exception e) {
+                                Log.e(TAG, "ERROR FROM THREAD IN BEACONDATA"+e.getMessage());
+                            }
+                        }
+                    });
+                    thread.start();
+
+
 
                 }
 
@@ -230,7 +276,7 @@ public class BeaconDataService extends Service{
                 return;
             }
 
-            Log.i("API", "totalCount: "+totalCount);
+            Log.i(TAG, "totalCount: "+totalCount);
 
         }
 
