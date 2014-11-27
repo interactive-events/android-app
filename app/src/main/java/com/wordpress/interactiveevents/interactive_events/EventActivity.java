@@ -39,7 +39,7 @@ public class EventActivity extends Activity{
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            eventId = extras.getString(eventId);
+            eventId = extras.getString("eventId");
             String title = extras.getString("event_title");
             String description = extras.getString("event_desc");
             event_description.setText(description);
@@ -56,14 +56,14 @@ public class EventActivity extends Activity{
             }
         });
 
-        final Button reqButton = (Button) findViewById(R.id.button3);
+        /*final Button reqButton = (Button) findViewById(R.id.button3);
         reqButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
                 //performRequest("steffengy");
-                performEventModulesRequest("1");
+                performEventModulesRequest(eventId);
             }
-        });
+        });*/
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, moduleStringArr);
         ListView lv = (ListView) findViewById(R.id.listView);
@@ -92,8 +92,8 @@ public class EventActivity extends Activity{
 
                 //Sending parameters to next Activity - WebViewActivity
                 nextScreen.putExtra("eventId", eventId);
-                String moduleId = modulesList.get(position).getModuleId();
-                nextScreen.putExtra("moduleId", moduleId);
+                String activityId = modulesList.get(position).getActivityId();
+                nextScreen.putExtra("activityId", activityId);
 
                 startActivity(nextScreen);
             }

@@ -9,7 +9,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ModulesResponse {
 
-    @JsonProperty("eventModules")
+    @JsonProperty("activities")
     private ModulesList modulesList;
 
     /*public void setModulesList(ModulesList modulesList) {

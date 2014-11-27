@@ -203,6 +203,7 @@ public class EventListActivity extends Activity {
                     JSONObject event = events.getJSONObject(i).getJSONObject("event");
                     final String title = event.getString("title");
                     final String description = event.getString("description");
+                    final String id = event.getString("id");
                     Log.i("API", title+", "+description);
 
                     TableRow tr = new TableRow(context);
@@ -236,6 +237,7 @@ public class EventListActivity extends Activity {
                             Intent eventScreen = new Intent(getApplicationContext(), EventActivity.class);
                             eventScreen.putExtra("event_title", title);
                             eventScreen.putExtra("event_desc", description);
+                            eventScreen.putExtra("eventId", id);
                             startActivity(eventScreen);
                         }
 
