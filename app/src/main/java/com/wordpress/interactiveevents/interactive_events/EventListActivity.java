@@ -48,6 +48,8 @@ public class EventListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_list);
 
+
+
         eventsTable = (TableLayout) findViewById(R.id.eventsTable);
 
         updateEventsTable();
