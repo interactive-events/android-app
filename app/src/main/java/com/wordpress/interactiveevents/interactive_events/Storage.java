@@ -17,6 +17,22 @@ public class Storage {
         auth_prefs = appContext.getSharedPreferences(PREFS_NAME, appContext.MODE_PRIVATE);
     }
 
+    static void setOnboardingToken(boolean onboard_token){
+        SharedPreferences.Editor editor = auth_prefs.edit();
+        editor.putBoolean("onboard_token", onboard_token);
+        // Commit the edit!
+        editor.commit();
+    }
+
+    static boolean OnboardTokenValid(){
+        Boolean onboard_token = auth_prefs.getBoolean("onboard_token", false);
+        if (onboard_token == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     static void setNewAccessToken(String access_token) {
         // Need an Editor object to make preference changes
         // All objects are from android.context.Context?

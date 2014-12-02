@@ -1,7 +1,7 @@
 package com.wordpress.interactiveevents.interactive_events;
 
 /**
- * Created by Webbpiraten on 2014-11-17.
+ * Created by Webbpiraten on 2014-11-27.
  */
 import android.content.Context;
 import android.view.View;
@@ -36,5 +36,7 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
     // References to our images in res > drawable
-    public Integer[] mThumbIds = {R.drawable.test};
+    public Integer[] mThumbIds = {
+            R.drawable.test, R.drawable.test2
+    };
 }
