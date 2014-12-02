@@ -611,14 +611,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if (success) {
                 //Starting a new Intent
                 Intent nextScreen = new Intent(getApplicationContext(), EventListActivity.class);
+                Intent pushApp = new Intent(getApplicationContext(), MessageReceivingService.class);
 
-                //Sending data to another Activity
-                //nextScreen.putExtra("name", inputName.getText().toString());
-                //nextScreen.putExtra("email", inputEmail.getText().toString());
-
-                //Log.e("n", inputName.getText() + "." + inputEmail.getText());
-
+                startService(pushApp);
                 startActivity(nextScreen);
+
                 finish(); // prevents going back to login-screen when successfully logged in
 
             } else {

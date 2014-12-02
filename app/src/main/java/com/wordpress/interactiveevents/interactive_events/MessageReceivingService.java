@@ -35,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 public class MessageReceivingService extends Service {
     private GoogleCloudMessaging gcm;
     public static SharedPreferences savedValues;
+    private static String webAddress = "http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/";
     private String address = "http://interactive-events.elasticbeanstalk.com/users/"+Storage.getUserId()+"?access_token="+Storage.getAccessToken();
     private static final String TAG = ".MessageReceivingService";
 
@@ -43,15 +44,16 @@ public class MessageReceivingService extends Service {
 
 
 
-
+/*
     public static void sendToApp(Bundle extras, Context context){
-        Intent newIntent = new Intent();
-        newIntent.setClass(context, AndroidMobilePushApp.class);
-        newIntent.putExtras(extras);
-        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(newIntent);
+       // Intent newIntent = new Intent();
+       // newIntent.setClass(context, AndroidMobilePushApp.class);
+       // newIntent.putExtras(extras);
+        Log.i("ASD KATT MEW", " : "+extras.getString("default"));
+       // newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       // context.startActivity(newIntent);
     }
-
+*/
     public void onCreate(){
         super.onCreate();
         final String preferences = getString(R.string.preferences);
@@ -63,51 +65,75 @@ public class MessageReceivingService extends Service {
         gcm = GoogleCloudMessaging.getInstance(getBaseContext());
         SharedPreferences savedValues = PreferenceManager.getDefaultSharedPreferences(this);
         if(savedValues.getBoolean(getString(R.string.first_launch), true)){
+            Log.i("WAI NO REGISTER?", "DERP");
             register();
             SharedPreferences.Editor editor = savedValues.edit();
             editor.putBoolean(getString(R.string.first_launch), false);
             editor.commit();
         }
         // Let AndroidMobilePushApp know we have just initialized and there may be stored messages
-        sendToApp(new Bundle(), this);
+        //sendToApp(new Bundle(), this);
     }
 
     protected static void saveToLog(Bundle extras, Context context){
+        String evntId = null;
+        String actId = null;
+        String moduleName = null;
+        String evntTitle = null;
         String urlStr = null;
-        SharedPreferences.Editor editor=savedValues.edit();
-        String numOfMissedMessages = context.getString(R.string.num_of_missed_messages);
+
+        //SharedPreferences.Editor editor=savedValues.edit();
+        //String numOfMissedMessages = context.getString(R.string.num_of_missed_messages);
         int linesOfMessageCount = 0;
-        for(String key : extras.keySet()){
+        for(String key : extras.keySet()) {
             String line = String.format("%s=%s", key, extras.getString(key));
-            Log.i(TAG,"####GETSTRING####"+line);
-            if (line.contains("default")){
-                urlStr = line.substring(line.indexOf("=")+1);
-                Log.i(TAG,"URLSTR= "+urlStr);
+            Log.i(TAG, "####GETSTRING####" + line);
+            if (line.contains("eventId")) {
+                evntId = line.substring(line.indexOf("=") + 1);
+
+            } else if (line.contains("activityId")) {
+                actId = line.substring(line.indexOf("=") + 1);
+
+            } else if (line.contains("name")) {
+                moduleName = line.substring(line.indexOf("=") + 1);
+
+            } else if (line.contains("eventTitle")) {
+                evntTitle = line.substring(line.indexOf("=") + 1);
+
+            } else if (line.contains("url")) {
+                urlStr = line.substring(line.indexOf("=") + 1);
+                urlStr = urlStr+"?access_token="+Storage.getAccessToken();
             }
-            editor.putString("MessageLine" + linesOfMessageCount, line);
+        }
+            Log.i("AMAGAD SO MUCH DATA", "ALL THE THINGS \n"+"evnt id "+evntId+" activityId "+actId+" Module name "+moduleName+" eventTitle "+evntTitle);
+            //editor.putString("MessageLine" + linesOfMessageCount, line);
             linesOfMessageCount++;
 
-        }
 
-        editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
-        editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
-        editor.putInt(numOfMissedMessages, savedValues.getInt(numOfMissedMessages, 0) + 1);
-        editor.commit();
+
+        //editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
+        //editor.putInt(context.getString(R.string.lines_of_message_count), linesOfMessageCount);
+        //editor.putInt(numOfMissedMessages, savedValues.getInt(numOfMissedMessages, 0) + 1);
+        //editor.commit();
         //postNotification(new Intent(context, AndroidMobilePushApp.class), context);
-        Log.i(TAG,"URLSTRTILLINTENT="+urlStr);
-        Intent pushIntent = new Intent(context, WebViewActivity.class);
-        pushIntent.putExtra("urlStr", urlStr);
-
-
-        postNotification(pushIntent, context);
+        if(evntId != null && !evntId.isEmpty() && actId != null && !actId.isEmpty()){
+            Log.i(TAG,"URLSTRTILLINTENT= "+urlStr);
+            Intent pushIntent = new Intent(context, WebViewActivity.class);
+            pushIntent.putExtra("urlStr", urlStr);
+            postNotification(pushIntent, context, evntTitle, moduleName);
+        } else {
+            Log.i("empty urlStr", "do nothing");
+        }
     }
 
-    protected static void postNotification(Intent intentAction, Context context){
+
+
+    protected static void postNotification(Intent intentAction, Context context, String eventName, String moduleType){
         final NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentAction, PendingIntent.FLAG_ONE_SHOT);
         final Notification notification = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("[PLACEHOLDER] Received!")
+                .setContentTitle(eventName+" Has posted a new "+moduleType)
                 .setContentText("")
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

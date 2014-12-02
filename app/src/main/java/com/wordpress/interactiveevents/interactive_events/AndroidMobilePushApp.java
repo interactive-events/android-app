@@ -1,3 +1,5 @@
+
+
 package com.wordpress.interactiveevents.interactive_events;
 
 import android.app.Activity;
@@ -25,10 +27,12 @@ public class AndroidMobilePushApp extends Activity {
     //TODO https://developer.android.com/google/gcm/client.html kolla in sidan för push via google istället för SNS Amazon
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         numOfMissedMessages = getString(R.string.num_of_missed_messages);
         setContentView(R.layout.activity_main);
         tView = (TextView) findViewById(R.id.tViewId);
         tView.setMovementMethod(new ScrollingMovementMethod());
+        */
         startService(new Intent(this, MessageReceivingService.class));
     }
 
