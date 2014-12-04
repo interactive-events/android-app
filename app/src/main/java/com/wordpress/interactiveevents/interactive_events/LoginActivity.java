@@ -146,6 +146,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mProgressView = findViewById(R.id.login_progress);
 
             //KNAPPTEST
+            /*
             mainBtn = (Button) findViewById(R.id.button);
             mainBtn.setOnClickListener(new OnClickListener() {
 
@@ -154,8 +155,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     openAlert(v);
                 }
             });
+            */
 
             //WEBVIEWTEST
+            /*
             urlBtn = (Button) findViewById(R.id.buttonUrl);
 
             urlBtn.setOnClickListener(new OnClickListener() {
@@ -167,6 +170,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 }
 
             });
+            */
             //WEBVIEWTEST SLUT
 
             //KNAPPTESTBEACONS
@@ -186,7 +190,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     startActivity(eventList);
                 }
             });*/
-
+            /*
             //KNAPPTESTBEACONS
             pushBtn = (Button) findViewById(R.id.pushButton);
             pushBtn.setOnClickListener(new OnClickListener() {
@@ -201,23 +205,24 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 beaconService.putExtra("beacon_major", 1);
                 beaconService.putExtra("beacon_minor", 1);
 
-                Log.i("#########dafuq#########", "gg?");*/
+                Log.i("#########dafuq#########", "gg?");
                     startActivity(pushApp);
                 }
             });
-
+            */
         }
 
     }
-
+    /*
     public void beaconTable(String beaconID, Integer beaconMajor, Integer beaconMinor) {
         //showProgress(true);
 
         getBeaconEvent = new getBeaconEvent(beaconID, beaconMajor, beaconMinor);
         getBeaconEvent.execute((Void) null);
     }
-
+    */
     //KNAPPTEST
+
     private void openAlert(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 
@@ -248,11 +253,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // show alert
         alertDialog.show();
     }
+
     //KNAPPTEST SLUT
 
 
 
     //KNAPPTEST2
+    /*
     private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 
@@ -285,6 +292,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // show alert
         alertDialog.show();
     }
+    */
     //KNAPPTEST2 SLUT
 
 
@@ -384,7 +392,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
-
+            /*
             mainBtn.setVisibility(show ? View.VISIBLE : View.GONE);
             mainBtn.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -393,6 +401,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     mainBtn.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+            */
 
 
         } else {
@@ -740,8 +749,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     Log.i("API", event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
+                    /*
                     openBeaconAlert(event_title,beacon_id,event_desc);
-
+                    */
                 }
 
             } catch (JSONException e) {
@@ -760,4 +770,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
     //TESTAR [BEACON sens]
+
+    /* REGISTER USER, SKA DOCK EJ IMPLEMENTERAS NU */
+    public void createUser(View view){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
 }

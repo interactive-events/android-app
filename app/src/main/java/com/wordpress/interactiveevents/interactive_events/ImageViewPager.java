@@ -50,7 +50,7 @@ public class ImageViewPager extends Activity {
             for (int i = 0; i < imageAdapter.getCount(); i++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setImageResource(imageAdapter.mThumbIds[i]);
-                imageView.setScaleType(ImageView.ScaleType.CENTER);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 images.add(imageView);
             }
 
@@ -61,6 +61,8 @@ public class ImageViewPager extends Activity {
             viewpager.setAdapter(pageradapter);
             // Show images following the position
             viewpager.setCurrentItem(position);
+
+            viewpager.setOffscreenPageLimit(1);
 
         /* MINE */
             viewpager.setOnPageChangeListener(new OnPageChangeListener() {
