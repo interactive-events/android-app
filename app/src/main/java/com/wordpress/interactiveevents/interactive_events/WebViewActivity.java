@@ -32,6 +32,7 @@ public class WebViewActivity extends Activity {
             Log.i(TAG,"##URL STR##"+urlStr);
             Log.d("modulelist", "eventId="+eventId+" activityId="+activityId);
         }
+        urlStr = urlStr+"?access_token="+Storage.getAccessToken();
 
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
