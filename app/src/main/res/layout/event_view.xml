@@ -37,6 +37,30 @@
             android:layout_gravity="center"
             android:textColor="@color/cs_white"
             android:paddingLeft="40dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cs_blue">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Event description"
+            android:id="@+id/textView4"
+            android:textAlignment="center"
+            android:textIsSelectable="true"
+            android:textColor="@color/cs_white"
+            android:padding="10dp"
+            android:textStyle="bold|italic"
+            android:textSize="16dp"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical|center_horizontal" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -68,6 +92,24 @@
             android:layout_weight="0.544"
             android:textSize="16dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Timeline"
+            android:id="@+id/textView5"
+            android:textAlignment="center"
+            android:textIsSelectable="true"
+            android:textColor="@color/cs_white"
+            android:textStyle="bold|italic"
+            android:textSize="16dp"
+            android:layout_weight="0.10"
+            android:background="@color/cs_blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp" />
+
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
@@ -81,14 +123,33 @@
             android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
             android:maxHeight="100dp"
-            android:maxWidth="100dp">
+            android:maxWidth="100dp"
+            android:background="@color/cs_blue">
         </SeekBar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Activities"
+            android:id="@+id/textView6"
+            android:textAlignment="center"
+            android:textIsSelectable="true"
+            android:textColor="@color/cs_white"
+            android:textStyle="bold|italic"
+            android:textSize="16dp"
+            android:layout_weight="0.15"
+            android:background="@color/cs_blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp" />
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/listView"
-            android:layout_weight="1.4" />
+            android:layout_weight="1.15" />
 
         <!--
                 <Button

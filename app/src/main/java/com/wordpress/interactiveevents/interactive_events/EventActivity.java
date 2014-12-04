@@ -106,6 +106,7 @@ public class EventActivity extends Activity {
                 // Assuming string, get value of clicked item
                 String value = (String) parent.getItemAtPosition(position);
                 Log.d("modulelist", value);
+                String url = modulesList.get(position).getUrl();
 
                 //Starting a new Intent
                 Intent nextScreen = new Intent(getApplicationContext(), WebViewActivity.class);
@@ -114,6 +115,7 @@ public class EventActivity extends Activity {
                 nextScreen.putExtra("eventId", eventId);
                 String activityId = modulesList.get(position).getActivityId();
                 nextScreen.putExtra("activityId", activityId);
+                nextScreen.putExtra("urlStr", url);
 
                 startActivity(nextScreen);
             }
