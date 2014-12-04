@@ -2,6 +2,7 @@
 <resources>
     <color name="cs_green">#4da624</color>
     <color name="cs_blue">#1b62bf</color>
+    <color name="cs_blue_secondary">#51358eff</color>
     <color name="cs_gray">#ccc</color>
     <color name="cs_orange">#f24405</color>
     <color name="cs_white">#ffffffff</color>
