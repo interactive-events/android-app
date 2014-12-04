@@ -7,12 +7,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -216,52 +219,62 @@ public class EventListActivity extends Activity {
                     event = event.getJSONObject("time");
                     final Long startTime = event.getLong("startTimestamp");
                     final Long stopTime = event.getLong("endTimestamp");
+                    final String evntStart = event.getString("start");
 
 
                     Log.i("###API TIME TESTING###", "STARTTIME "+startTime+" ,STOPTIME "+stopTime);
 
-                   // DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-                   // DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-                    /*
-                    try {
-                        //startTi = df.parse(startTime);
-                        Log.i("API TIME TESTING STARTTIME","yyyy-MM-ddHH:mm:ss.SSS= "+ startTi.getTime());
-                        //endTi = df2.parse(stopTime);
-                        Log.i("API TIME TESTING STOPTIME","yyyy-MM-ddHH:mm:ss.SSS= "+ endTi.getTime());
+                    String evntStartFragments[] = evntStart.split("T");
+                    String evntFragments[] = evntStartFragments[1].split("\\.");
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    */
 
                     TableRow tr = new TableRow(context);
-                    tr.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TableLayout.LayoutParams tableRowParams=
+                            new TableLayout.LayoutParams
+                                    (TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+
+                    int leftMargin=5;
+                    int topMargin=0;
+                    int rightMargin=5;
+                    int bottomMargin=20;
+
+                    tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+                    tr.setLayoutParams(tableRowParams);
+
+                    tr.setBackgroundColor(context.getResources().getColor(R.color.cs_white));
 
                     // Create a TextView to add date
                     TextView labelTitle = new TextView(context);
                     labelTitle.setText(title);
-                    labelTitle.setPadding(2, 0, 5, 0);
+                    labelTitle.setPadding(20, 20, 0, 0);
+                    labelTitle.setTypeface(null, Typeface.BOLD);
                     labelTitle.setTextColor(Color.BLACK);
+                    labelTitle.setTextSize(18);
+                    labelTitle.setGravity(View.TEXT_ALIGNMENT_CENTER);
                     tr.addView(labelTitle);
 
                     TextView labelDesc = new TextView(context);
                     //labelDesc.setText(description);
-                    labelDesc.setText("");
+                    labelDesc.setText(evntStartFragments[0]+"\n "+evntFragments[0]);
+                    labelDesc.setTypeface(null, Typeface.ITALIC);
                     labelDesc.setTextColor(Color.BLACK);
+                    labelDesc.setPadding(15,0,0,50);
+                    labelDesc.setMaxLines(2);
                     tr.addView(labelDesc);
 
-                    Button eventButton = new Button(context);
-                    eventButton.setText("View");
-                    tr.addView(eventButton);
+                    /*TextView evntInfo = new TextView(context);
+                    evntInfo.setText(evntStart);
+                    evntInfo.setTypeface(null, Typeface.ITALIC);
+                    tr.addView(evntInfo);
+                    */
+
 
                     //testar redir
 
 
-                    eventButton.setOnClickListener(new View.OnClickListener() {
+                    tr.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View arg0) {
@@ -277,10 +290,7 @@ public class EventListActivity extends Activity {
                     });
 
                     //slut test
-
-                    table.addView(tr, new TableLayout.LayoutParams(
-                            TableRow.LayoutParams.FILL_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
+                    table.addView(tr, tableRowParams);
                 }
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
