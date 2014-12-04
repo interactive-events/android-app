@@ -1,5 +1,7 @@
 package com.wordpress.interactiveevents.interactive_events;
 
+import android.util.Log;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
