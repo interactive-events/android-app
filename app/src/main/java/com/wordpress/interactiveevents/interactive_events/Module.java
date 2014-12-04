@@ -14,6 +14,7 @@ public class Module {
     private String module;
     private String id;
     private String customData;
+    private String state;
     /*
         public void setType(String name) {
             this.name = name;
@@ -25,6 +26,8 @@ public class Module {
             this.customData = customData;
         }
     */
+    public String getState() { return state; }
+
     public String getName() {
         return name;
     }

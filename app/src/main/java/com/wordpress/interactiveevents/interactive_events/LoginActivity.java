@@ -361,7 +361,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        //return password.length() > 4;
+        return true;
     }
 
     /**
@@ -774,6 +775,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     /* REGISTER USER, SKA DOCK EJ IMPLEMENTERAS NU */
     public void createUser(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
+        this.overridePendingTransition(R.anim.rightanim, R.anim.leftanim);
         startActivity(intent);
     }
 

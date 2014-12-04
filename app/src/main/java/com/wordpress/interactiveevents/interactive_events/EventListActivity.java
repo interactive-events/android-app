@@ -52,8 +52,8 @@ public class EventListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_list);
 
-
-
+        Intent pushApp = new Intent(getApplicationContext(), AndroidMobilePushApp.class);
+        startActivity(pushApp);
         eventsTable = (TableLayout) findViewById(R.id.eventsTable);
 
         updateEventsTable();

@@ -338,6 +338,7 @@ public class RegisterActivity extends Activity implements LoaderManager.LoaderCa
             if (success) {
                 //Starting a new Intent
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                overridePendingTransition(R.anim.leftanim, R.anim.rightanim);
                 startActivity(intent);
                 finish(); // prevents going back to register-screen when successfully creating a user
             } else {
@@ -351,4 +352,5 @@ public class RegisterActivity extends Activity implements LoaderManager.LoaderCa
             showProgress(false);
         }
     }
+
 }
