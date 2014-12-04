@@ -132,7 +132,7 @@ public class MessageReceivingService extends Service {
         final NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentAction, PendingIntent.FLAG_ONE_SHOT);
-        final Notification notification = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher)
+        final Notification notification = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.fuckkinbuttn)
                 .setContentTitle(eventName+" Has posted a new "+moduleType)
                 .setContentText("")
                 .setContentIntent(pendingIntent)

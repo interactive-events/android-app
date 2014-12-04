@@ -4,19 +4,28 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:weightSum="1">
+    android:weightSum="2">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title_layout">
+        android:id="@+id/title_layout"
+        android:weightSum="1"
+        android:background="@color/cs_blue"
+        android:baselineAligned="false"
+        android:measureWithLargestChild="false"
+        android:padding="5dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            android:id="@+id/button2" />
+        <ImageButton
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:id="@+id/button2"
+            android:src="@drawable/fuckkinbuttn3"
+            android:adjustViewBounds="true"
+            android:baselineAlignBottom="false"
+            android:cropToPadding="false"
+            android:background="@null"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,73 +33,19 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[Hårdkodad TITLE]"
             android:id="@+id/event_title"
-            android:layout_gravity="center"
             android:textStyle="bold"
-            android:layout_marginLeft="30dp" />
+            android:layout_gravity="center"
+            android:textColor="@color/cs_white"
+            android:paddingLeft="40dp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="[Hårdkodad Description]"
-            android:id="@+id/event_description"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
-
-        <SeekBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/seekBar"
-            android:layout_weight="0.90"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp" />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:checked="false"
-            android:clickable="false"
-            android:layout_marginTop="20dp"
-            android:background="@color/cs_green" />
-
-    </LinearLayout>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="More"
-            android:id="@+id/button"
-            android:layout_row="13"
-            android:layout_column="0"
-            android:layout_gravity="right" />
-
-    </GridLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1">
+        android:weightSum="2"
+        android:layout_weight="2"
+        android:background="@color/cs_white">
 <!--
         <TextView
             android:layout_width="fill_parent"
@@ -102,11 +57,39 @@
             android:paddingLeft="10dp" />
             -->
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="[Hårdkodad Description]"
+            android:id="@+id/event_description"
+            android:layout_marginTop="0dp"
+            android:scrollbars = "vertical"
+            android:layout_weight="0.544"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progressDrawable="@drawable/progress"
+            android:thumb="@drawable/thumb"
+            android:layout_weight="0.06"
+            android:indeterminate="false"
+            android:thumbOffset="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp">
+        </SeekBar>
+
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
             android:id="@+id/listView"
-            android:layout_weight="0.53" />
+            android:layout_weight="1.4" />
+
         <!--
                 <Button
                     android:layout_width="wrap_content"

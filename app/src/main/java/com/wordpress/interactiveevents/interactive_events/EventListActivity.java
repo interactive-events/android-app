@@ -31,6 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by raxo on 03/11/14.
@@ -195,6 +199,8 @@ public class EventListActivity extends Activity {
             JSONObject jObj;
             JSONArray events;
             String totalCount;
+            Date startTi = null;
+            Date endTi =null;
             try {
                 jObj = new JSONObject(result);
                 events = jObj.getJSONArray("events");
@@ -206,7 +212,29 @@ public class EventListActivity extends Activity {
                     final String title = event.getString("title");
                     final String description = event.getString("description");
                     final String id = event.getString("id");
-                    Log.i("API", title+", "+description);
+
+                    event = event.getJSONObject("time");
+                    final Long startTime = event.getLong("startTimestamp");
+                    final Long stopTime = event.getLong("endTimestamp");
+
+
+                    Log.i("###API TIME TESTING###", "STARTTIME "+startTime+" ,STOPTIME "+stopTime);
+
+                   // DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                   // DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+                    /*
+                    try {
+                        //startTi = df.parse(startTime);
+                        Log.i("API TIME TESTING STARTTIME","yyyy-MM-ddHH:mm:ss.SSS= "+ startTi.getTime());
+                        //endTi = df2.parse(stopTime);
+                        Log.i("API TIME TESTING STOPTIME","yyyy-MM-ddHH:mm:ss.SSS= "+ endTi.getTime());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    */
 
                     TableRow tr = new TableRow(context);
                     tr.setLayoutParams(new TableRow.LayoutParams(
@@ -232,6 +260,7 @@ public class EventListActivity extends Activity {
 
                     //testar redir
 
+
                     eventButton.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -240,6 +269,8 @@ public class EventListActivity extends Activity {
                             eventScreen.putExtra("event_title", title);
                             eventScreen.putExtra("event_desc", description);
                             eventScreen.putExtra("eventId", id);
+                            eventScreen.putExtra("start_time", startTime );
+                            eventScreen.putExtra("stop_time", stopTime );
                             startActivity(eventScreen);
                         }
 
