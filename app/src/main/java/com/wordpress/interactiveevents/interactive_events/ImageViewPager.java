@@ -12,11 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class ImageViewPager extends Activity {
     // Declare Variable
@@ -102,6 +99,7 @@ public class ImageViewPager extends Activity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+        this.overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
 
 }

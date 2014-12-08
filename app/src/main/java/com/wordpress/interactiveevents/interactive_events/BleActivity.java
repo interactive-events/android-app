@@ -26,7 +26,6 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
     private static final String TAG = ".BleActivity";
     private RegionBootstrap regionBootstrap;
     private BeaconManager bm;
-    ArrayList<String> stringList = new ArrayList<String>();
     HashMap<String, Long> seenBeacons = new HashMap<String, Long>();
     String listItem;
 
@@ -45,10 +44,7 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
         bm = BeaconManager.getInstanceForApplication(this);
         bm.setBackgroundScanPeriod(2000); // 2 seconds
         bm.setBackgroundBetweenScanPeriod(15000); // 15 seconds
-
         bm.setRangeNotifier(this);
-
-
     }
 
     @Override
@@ -72,21 +68,18 @@ public class BleActivity extends Application implements BootstrapNotifier, Range
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         Intent beaconService = new Intent(getApplicationContext(), BeaconDataService.class);
-        Log.d(TAG, "###################################### Periodic AIDS ######################################");
+        Log.d(TAG, "###################################### Periodic ######################################");
         for (Beacon beacon: beacons){
-
             String beaconID = beacon.getId1().toString();
             String beaconMajor = beacon.getId2().toString();
             String beaconMinor = beacon.getId3().toString();
 
-
             listItem = beaconID+beaconMajor+beaconMinor;
             long unixTime = System.currentTimeMillis() / 1000L;
 
-
             if(seenBeacons.get(listItem) != null) {
                 for (Map.Entry entry : seenBeacons.entrySet()) {
-                    Log.i(TAG,"####URINGAS####"+entry.getKey() + ", " + entry.getValue());
+                    Log.i(TAG,"####BEACON####"+entry.getKey() + ", " + entry.getValue());
                 }
                 Log.i(TAG, "prev. beacon found");
                 Long timeDiff = unixTime - seenBeacons.get(listItem);

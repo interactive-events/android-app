@@ -2,6 +2,7 @@ package com.wordpress.interactiveevents.interactive_events;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -20,7 +21,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +33,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -338,8 +336,8 @@ public class RegisterActivity extends Activity implements LoaderManager.LoaderCa
             if (success) {
                 //Starting a new Intent
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                overridePendingTransition(R.anim.leftanim, R.anim.rightanim);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 finish(); // prevents going back to register-screen when successfully creating a user
             } else {
                 rEmailView.setError(getString(R.string.error_invalid_email_reg));
@@ -352,5 +350,9 @@ public class RegisterActivity extends Activity implements LoaderManager.LoaderCa
             showProgress(false);
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+    }
 }

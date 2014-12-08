@@ -13,9 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,9 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -283,6 +277,7 @@ public class EventListActivity extends Activity {
                             eventScreen.putExtra("start_time", startTime );
                             eventScreen.putExtra("stop_time", stopTime );
                             startActivity(eventScreen);
+                            overridePendingTransition(R.anim.lefttorightanim, R.anim.righttoleftanim);
                         }
 
                     });
@@ -302,5 +297,10 @@ public class EventListActivity extends Activity {
             getEventsTask = null;
             //showProgress(false);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);
     }
 }

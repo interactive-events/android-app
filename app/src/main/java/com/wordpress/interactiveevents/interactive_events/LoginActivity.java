@@ -2,6 +2,7 @@ package com.wordpress.interactiveevents.interactive_events;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,7 +12,6 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -33,30 +33,19 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -630,6 +619,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 startActivity(nextScreen);
 
                 finish(); // prevents going back to login-screen when successfully logged in
+                overridePendingTransition(R.anim.anim_slide_in_up, R.anim.anim_slide_out_up);
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -780,8 +770,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     /* REGISTER USER, SKA DOCK EJ IMPLEMENTERAS NU */
     public void createUser(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
-        this.overridePendingTransition(R.anim.rightanim, R.anim.leftanim);
         startActivity(intent);
+        this.overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
 
 }
