@@ -775,6 +775,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     /* REGISTER USER, SKA DOCK EJ IMPLEMENTERAS NU */
     public void createUser(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
+        this.overridePendingTransition(R.anim.rightanim, R.anim.leftanim);
         startActivity(intent);
     }
 

@@ -50,7 +50,7 @@ public class ImageViewPager extends Activity {
             for (int i = 0; i < imageAdapter.getCount(); i++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setImageResource(imageAdapter.mThumbIds[i]);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setScaleType(ImageView.ScaleType.FIT_END);//FIT_XY
                 images.add(imageView);
             }
 

@@ -13,8 +13,10 @@ public class Module {
     private String name;
     private String module;
     private String id;
+    private String state;
     private Object customData;
     private String url;
+
     /*
         public void setType(String name) {
             this.name = name;
@@ -26,6 +28,8 @@ public class Module {
             this.customData = customData;
         }
     */
+    public String getState() { return state; }
+
     public String getName() {
         return name;
     }
