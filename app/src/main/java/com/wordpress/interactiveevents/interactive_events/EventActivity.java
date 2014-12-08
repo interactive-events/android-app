@@ -73,7 +73,7 @@ public class EventActivity extends Activity {
             public void onClick(View view) {
                 Intent homeScreen = new Intent(getApplicationContext(), EventListActivity.class);
                 startActivity(homeScreen);
-                overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
             }
         });
 
@@ -117,7 +117,8 @@ public class EventActivity extends Activity {
                 nextScreen.putExtra("urlStr", url);
 
                 startActivity(nextScreen);
-                overridePendingTransition(R.anim.lefttorightanim, R.anim.righttoleftanim);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                //overridePendingTransition(R.anim.anim_slide_out_right, R.anim.anim_slide_in_right);
             }
         });
     }
@@ -230,5 +231,11 @@ public class EventActivity extends Activity {
            // moduleStringArr = (ArrayList) listOfModules;
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 }

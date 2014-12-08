@@ -277,7 +277,7 @@ public class EventListActivity extends Activity {
                             eventScreen.putExtra("start_time", startTime );
                             eventScreen.putExtra("stop_time", stopTime );
                             startActivity(eventScreen);
-                            overridePendingTransition(R.anim.lefttorightanim, R.anim.righttoleftanim);
+                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                         }
 
                     });
@@ -301,6 +301,6 @@ public class EventListActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);
+        overridePendingTransition(R.anim.anim_slide_out_right, R.anim.anim_slide_in_right);
     }
 }

@@ -78,7 +78,7 @@ public class WebViewActivity extends Activity {
 
                 Intent nextScreen = new Intent(getApplicationContext(), EventListActivity.class);
                 startActivity(nextScreen);
-                overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
             }
 
         });
@@ -87,6 +87,6 @@ public class WebViewActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 }
