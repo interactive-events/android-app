@@ -102,7 +102,7 @@ public class MessageReceivingService extends Service {
 
             } else if (line.contains("url")) {
                 urlStr = line.substring(line.indexOf("=") + 1);
-                urlStr = urlStr+"?access_token="+Storage.getAccessToken();
+                //urlStr = urlStr+"?access_token="+Storage.getAccessToken();
             }
         }
             Log.i("AMAGAD SO MUCH DATA", "ALL THE THINGS \n"+"evnt id "+evntId+" activityId "+actId+" Module name "+moduleName+" eventTitle "+evntTitle);

@@ -42,15 +42,13 @@ public class WebViewActivity extends Activity {
             webView.setWebContentsDebuggingEnabled(true);
         }
 
-        String access_token = Storage.getAccessToken();
-        String access_param = "?access_token="+access_token;
         Log.d("Web", urlStr);
         //webView.loadUrl("http://www.aftonbladet.se");
         if(urlStr != null && !urlStr.isEmpty()){
             webView.loadUrl(urlStr);
             Log.i(TAG,"### JAG LADDAR URL ### "+urlStr);
         } else {
-            webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/123/modules/1/push"+access_param);
+            webView.loadUrl(urlStr);
         }
 
         //webView.loadUrl("http://interactive-events-web-app.s3-website-eu-west-1.amazonaws.com/events/%s/modules/%s/push"+access_param, eventId, moduleId);
