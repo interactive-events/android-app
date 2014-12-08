@@ -4,6 +4,7 @@ package com.wordpress.interactiveevents.interactive_events;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,9 +38,13 @@ public class WebViewActivity extends Activity {
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+
         String access_token = Storage.getAccessToken();
         String access_param = "?access_token="+access_token;
-
+        Log.d("Web", urlStr);
         //webView.loadUrl("http://www.aftonbladet.se");
         if(urlStr != null && !urlStr.isEmpty()){
             webView.loadUrl(urlStr);
