@@ -71,11 +71,11 @@ public class BeaconDataService extends Service{
     }
 
     //KNAPPTEST2
-    private void openBeaconAlert(final String eventName,final String eventId, final String eventDesc) {
+    private void openBeaconAlert(final String eventName,final String eventId, final String eventDesc, final Long startTime, final Long stopTime) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeaconDataService.this);
 
         alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setTitle("Red or Blue pill?");
+        alertDialogBuilder.setTitle("Beacon detected!");
         alertDialogBuilder.setMessage("Nearby event attended! \n Event name :"+eventName+"\n  Description: "+eventDesc);
         // set positive button: Yes message
         alertDialogBuilder.setNegativeButton("Ignore.",new DialogInterface.OnClickListener() {
@@ -95,6 +95,8 @@ public class BeaconDataService extends Service{
                 positveActivity.putExtra("event_title", eventName);
                 positveActivity.putExtra("event_desc", eventDesc);
                 positveActivity.putExtra("eventId", eventId);
+                positveActivity.putExtra("start_time", startTime );
+                positveActivity.putExtra("stop_time", stopTime );
                 positveActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(positveActivity);
 
@@ -234,9 +236,13 @@ public class BeaconDataService extends Service{
                     final String event_id = event.getString("id");
                     Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
 
+                    event = event.getJSONObject("time");
+                    final Long startTime = event.getLong("startTimestamp");
+                    final Long stopTime = event.getLong("endTimestamp");
+
                     //call popup method, populate with actual beacon data
                     Log.i(TAG, "########## ########## openBeaconAlert ########## ##########");
-                    openBeaconAlert(event_title,event_id,event_desc);
+                    openBeaconAlert(event_title,event_id,event_desc,startTime,stopTime);
 
                     //checkin http post
                     Thread thread = new Thread(new Runnable(){
