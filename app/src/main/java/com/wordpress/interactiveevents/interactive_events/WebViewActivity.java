@@ -39,7 +39,7 @@ public class WebViewActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
+            webView.setWebContentsDebuggingEnabled(true);
         }
 
         String access_token = Storage.getAccessToken();
@@ -71,6 +71,11 @@ public class WebViewActivity extends Activity {
 
             @Override
             public void onClick(View arg0) {
+
+                // Highjacking this button for test... remove later
+                //webView.reload();
+                //webView.loadUrl(urlStr);
+
                 Intent nextScreen = new Intent(getApplicationContext(), EventListActivity.class);
                 startActivity(nextScreen);
                 overridePendingTransition(R.anim.righttoleftanim, R.anim.lefttorightanim);

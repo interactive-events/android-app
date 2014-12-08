@@ -553,6 +553,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 jObj = new JSONObject(result);
             } catch (JSONException e) {
                 e.printStackTrace();
+                Intent eventScreen = new Intent(getApplicationContext(), LoginActivity.class);
+                eventScreen.putExtra("error", "Probably Unauthorized, this is a quick fix");
+                startActivity(eventScreen);
             }
             Log.d("login", "jObj="+jObj);
             String access_token = null;
