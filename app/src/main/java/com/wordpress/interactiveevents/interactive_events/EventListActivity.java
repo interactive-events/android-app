@@ -249,7 +249,7 @@ public class EventListActivity extends Activity {
 
                     TextView labelDesc = new TextView(context);
                     //labelDesc.setText(description);
-                    labelDesc.setText(evntStartFragments[0]+"\n "+evntFragments[0]);
+                    labelDesc.setText(evntFragments[0].substring(0,5)+"\n"+evntStartFragments[0]);
                     labelDesc.setTypeface(null, Typeface.ITALIC);
                     labelDesc.setTextColor(Color.BLACK);
                     labelDesc.setPadding(15,0,0,50);
