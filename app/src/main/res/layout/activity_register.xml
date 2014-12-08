@@ -8,7 +8,8 @@ android:paddingBottom="@dimen/activity_vertical_margin"
 android:paddingLeft="@dimen/activity_horizontal_margin"
 android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
-tools:context=".RegisterActivity">
+tools:context=".RegisterActivity"
+    android:background="@color/cs_blue">
 
 <ImageView
     android:layout_width="match_parent"
@@ -48,7 +49,9 @@ tools:context=".RegisterActivity">
             android:imeOptions="actionUnspecified"
             android:inputType="text"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/cs_white"
+            android:textColorHint="@color/cs_white" />
 
         <AutoCompleteTextView
             android:id="@+id/email_reg"
@@ -57,7 +60,9 @@ tools:context=".RegisterActivity">
             android:hint="@string/prompt_register_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/cs_white"
+            android:textColorHint="@color/cs_white" />
 
         <EditText
             android:id="@+id/password_reg"
@@ -69,7 +74,9 @@ tools:context=".RegisterActivity">
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColorHint="@color/cs_white"
+            android:textColor="@color/cs_white" />
 
         <Button
             android:id="@+id/email_register_button"
