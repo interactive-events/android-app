@@ -36,15 +36,9 @@ public class BeaconDataService extends Service{
 
     private static final String TAG = ".BeaconDataService";
     getBeaconEvent getBeaconEvent;
-
     static String API = "http://interactive-events.elasticbeanstalk.com/";
 
-
-
-
-
     // OM SERVICE BARA FUNGERAR EN GÅNG BYT FRÅN ONBIND TILL onStartCommand()
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle extras = intent.getExtras();
@@ -76,8 +70,6 @@ public class BeaconDataService extends Service{
     public void onCreate (){
     }
 
-
-
     //KNAPPTEST2
     private void openBeaconAlert(final String eventName,final String eventId, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BeaconDataService.this);
@@ -108,18 +100,12 @@ public class BeaconDataService extends Service{
 
             }
         });
-
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         // show alert
         alertDialog.show();
     }
-
-
     //KNAPPTEST2 SLUT
-
-
 
     //TESTAR [BEACON sens]
     public class getBeaconEvent extends AsyncTask<Void, Void, String> {
@@ -155,8 +141,6 @@ public class BeaconDataService extends Service{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         @Override
@@ -230,11 +214,9 @@ public class BeaconDataService extends Service{
         @Override
         protected void onPostExecute(final String result) {
             getBeaconEvent = null;
-
             if (result == null) {
                 return;
             }
-
             JSONObject jObj;
             JSONArray beacons;
             String totalCount;
@@ -253,6 +235,7 @@ public class BeaconDataService extends Service{
                     Log.i(TAG, event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
+                    Log.i(TAG, "########## ########## openBeaconAlert ########## ##########");
                     openBeaconAlert(event_title,event_id,event_desc);
 
                     //checkin http post
@@ -268,20 +251,13 @@ public class BeaconDataService extends Service{
                         }
                     });
                     thread.start();
-
-
-
                 }
-
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
                 return;
             }
-
             Log.i(TAG, "totalCount: "+totalCount);
-
         }
-
         @Override
         protected void onCancelled() {
             getBeaconEvent = null;

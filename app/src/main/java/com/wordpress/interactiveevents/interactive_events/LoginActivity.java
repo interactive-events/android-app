@@ -56,6 +56,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     final Context context = this;
 
     static String API = "http://private-274c2-interactiveevents.apiary-mock.com/";
-    getBeaconEvent getBeaconEvent;
+    //getBeaconEvent getBeaconEvent;
     TableLayout eventsTable;
     String beaconID;
     Integer beaconMajor,beaconMinor;
@@ -189,7 +190,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
                     startActivity(eventList);
                 }
-            });*/
+            });
+            */
+
             /*
             //KNAPPTESTBEACONS
             pushBtn = (Button) findViewById(R.id.pushButton);
@@ -259,7 +262,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
     //KNAPPTEST2
-    /*
+
     private void openBeaconAlert(final String eventName,final String beacID, final String eventDesc) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 
@@ -292,7 +295,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // show alert
         alertDialog.show();
     }
-    */
+
     //KNAPPTEST2 SLUT
 
 
@@ -648,6 +651,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
     //TESTAR [BEACON sens]
+    /*
     public class getBeaconEvent extends AsyncTask<Void, Void, String> {
         Integer beaconMajor,beaconMinor;
         String beaconID;
@@ -753,9 +757,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     Log.i("API", event_title+", "+beacon_id+", "+event_desc);
 
                     //call popup method, populate with actual beacon data
-                    /*
-                    openBeaconAlert(event_title,beacon_id,event_desc);
-                    */
+
+                    //openBeaconAlert(event_title,beacon_id,event_desc);
+
                 }
 
             } catch (JSONException e) {
@@ -773,6 +777,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             //showProgress(false);
         }
     }
+    */
     //TESTAR [BEACON sens]
 
     /* REGISTER USER, SKA DOCK EJ IMPLEMENTERAS NU */

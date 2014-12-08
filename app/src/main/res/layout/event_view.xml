@@ -87,10 +87,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[Hårdkodad Description]"
             android:id="@+id/event_description"
-            android:layout_marginTop="0dp"
             android:scrollbars = "vertical"
             android:layout_weight="0.544"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:padding="5dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -149,7 +149,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/listView"
-            android:layout_weight="1.15" />
+            android:layout_weight="1.16"
+            android:padding="0dp" />
 
         <!--
                 <Button
