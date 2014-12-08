@@ -60,11 +60,8 @@ public class EventActivity extends Activity {
             event_description.setText(description);
             event_title.setText(title);
             seek_bar.setEnabled(false);
-
-
             updateProgress(startTi, endTi);
         }
-
 
         homeBtn = (ImageButton) findViewById(R.id.button2);
         homeBtn.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +128,6 @@ public class EventActivity extends Activity {
     }
 
     // And From your main() method or any other method
-
-
-
     public void updateProgress(long startTi, long endTi){
 
         currTi = System.currentTimeMillis();
@@ -154,7 +148,6 @@ public class EventActivity extends Activity {
             seek_bar.setProgress(100);
         }
     }
-
 
     protected void onResume() {
         timer = new Timer();

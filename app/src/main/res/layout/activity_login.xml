@@ -8,8 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LoginActivity"
-    android:background="@color/cs_blue">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -49,8 +48,6 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/cs_white"
-                android:textColorHint="@color/cs_white"
                 android:textIsSelectable="false" />
 
             <EditText
@@ -63,9 +60,7 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/cs_white"
-                android:textColorHint="@color/cs_white" />
+                android:singleLine="true"/>
 
             <Button
                 android:id="@+id/email_sign_in_button"
