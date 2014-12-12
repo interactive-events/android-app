@@ -158,7 +158,7 @@ public class BeaconDataService extends Service{
             try {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(API+"events"+access_param+"&beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor);
+                HttpGet httpGet = new HttpGet(API+"events"+access_param+"&beaconsUUID="+beaconID+"&beaconsMinor="+beaconMinor+"&beaconsMajor="+beaconMajor+"&isOngoing=1");
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
                 Log.i(TAG, "server returned status code "+httpResponse.getStatusLine());
@@ -245,18 +245,21 @@ public class BeaconDataService extends Service{
                     openBeaconAlert(event_title,event_id,event_desc,startTime,stopTime);
 
                     //checkin http post
-                    Thread thread = new Thread(new Runnable(){
-                    @Override
-                        public void run() {
-                            try {
-                                Log.i(TAG,"yay! :D");
-                                beaconPost(event_id,null);
-                            } catch (Exception e) {
-                                Log.e(TAG, "ERROR FROM THREAD IN BEACONDATA"+e.getMessage());
+
+                        Thread thread = new Thread(new Runnable(){
+                            @Override
+                            public void run() {
+                                try {
+                                    Log.i(TAG,"yay! :D");
+                                    beaconPost(event_id,null);
+                                } catch (Exception e) {
+                                    Log.e(TAG, "ERROR FROM THREAD IN BEACONDATA"+e.getMessage());
+                                }
                             }
-                        }
-                    });
-                    thread.start();
+                        });
+                        thread.start();
+
+
                 }
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());

@@ -7,10 +7,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -128,6 +131,7 @@ public class MessageReceivingService extends Service {
 
 
 
+
     protected static void postNotification(Intent intentAction, Context context, String eventName, String moduleType){
         final NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -135,9 +139,14 @@ public class MessageReceivingService extends Service {
         final Notification notification = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(eventName+" Has posted a new "+moduleType)
                 .setContentText("")
+                .setVibrate(new long[]{ 0, 500, 250, 500})
+                .setLights(Color.RED, 1000, 1000)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .getNotification();
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
+        wl.acquire(7500);
 
         mNotificationManager.notify(R.string.notification_number, notification);
     }
