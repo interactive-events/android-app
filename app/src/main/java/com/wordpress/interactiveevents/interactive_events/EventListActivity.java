@@ -55,7 +55,7 @@ public class EventListActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                Intent refresh = getIntent();
+                Intent refresh = new Intent(getApplicationContext(), EventListActivity.class);
                 refresh.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 finish();
                 startActivity(refresh);
